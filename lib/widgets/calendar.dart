@@ -1,37 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+// import 'package:day_night_time_picker/lib/state/time.dart';
+// import 'package:flutter/material.dart';
+// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class CalendarDialog {
-  late CalendarController _calendarController;
+// class CalendarDialog extends StatelessWidget {
+//   final DateRangePickerController _dateRangePickerController =
+//       DateRangePickerController();
 
-  CalendarDialog() {
-    _calendarController = CalendarController();
-  }
+//   DateTime? selectedDate;
+//   Time? selectedTime;
 
-  Future<void> dialogBuilder(BuildContext context) {
-    return showModalBottomSheet<void>(
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Select a date'),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: SfCalendar(
-              controller: _calendarController,
-              view: CalendarView.month,
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
+//   CalendarDialog({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {}
+// }

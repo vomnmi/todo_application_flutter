@@ -1,13 +1,17 @@
+import 'dart:developer';
+
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-// import 'package:get/get.dart';
-
-import '../../dialogs/add_task_dialog.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../models/nav_bar_item.dart';
+import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
 
 class EmptyHomeScreen extends StatefulWidget {
@@ -18,8 +22,7 @@ class EmptyHomeScreen extends StatefulWidget {
 }
 
 class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
-  int _currentIndex = 0;
-  AddTaskDialog dialog = AddTaskDialog();
+  final HomeState state = HomeState();
 
   List<NavBarItem> items = [
     NavBarItem(
@@ -43,6 +46,213 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
       title: 'Profile',
     ),
   ];
+
+  final DateRangePickerController _dateRangePickerController =
+      DateRangePickerController();
+
+  void setTime(Time time) {
+    log(time.toString());
+    state.setTime(time);
+    Navigator.pop(context);
+  }
+
+  // Calendar and SetTime Widget
+
+  Future<dynamic> showCalendar() async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: AppColors.bottomNavBar,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SfDateRangePicker(
+                backgroundColor: AppColors.bottomNavBar,
+                selectionColor: AppColors.calendarPurple,
+                selectionRadius: 20,
+                toggleDaySelection: true,
+                showNavigationArrow: true,
+                headerStyle: DateRangePickerHeaderStyle(
+                  textAlign: TextAlign.center,
+                  textStyle: context.theme.displayMedium,
+                ),
+                monthViewSettings:
+                    const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
+                minDate: DateTime(2020),
+                maxDate: DateTime(2030),
+                initialDisplayDate: DateTime.now(),
+                controller: _dateRangePickerController,
+                onCancel: () {
+                  _dateRangePickerController.selectedDate = null;
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 153,
+                    height: 48,
+                    child: OutlinedButton(
+                      style: const ButtonStyle(),
+                      onPressed: () => {
+                        Navigator.pop(context),
+                      },
+                      child: const Text(
+                        'Cancel',
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 153,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          showPicker(
+                            context: context,
+                            value: Time(hour: 0, minute: 00),
+                            // ignore: avoid_redundant_argument_values
+                            sunrise: const TimeOfDay(hour: 6, minute: 00),
+                            // ignore: prefer_const_constructors
+                            sunset: TimeOfDay(hour: 18, minute: 00),
+                            onChange: setTime,
+                            accentColor: AppColors.primary,
+                            themeData: ThemeData.dark(),
+                            iosStylePicker: true,
+                          ),
+                        );
+                      },
+                      child: const Text('Choose Time'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ).paddingHorizontal(8),
+        ).paddingOnly(top: 274, bottom: 212, left: 24, right: 24);
+      },
+    );
+  }
+
+  // Bottom Nav Bar
+  Future<void> showAddTask() async {
+    await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return DecoratedBox(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            color: AppColors.bottomNavBar,
+          ),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Gap(14),
+                Text(
+                  'Add Task',
+                  style: context.theme.headlineMedium,
+                ),
+                const Gap(14),
+                TextField(
+                  // cursorHeight: 20,
+                  style: context.theme.bodyMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: 18,
+                  ),
+                  onChanged: (val) {
+                    state.title = val;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Task',
+                    fillColor: Colors.transparent,
+                    isDense: true,
+                    contentPadding:
+                        EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.textFieldColor),
+                    ),
+                  ),
+                ),
+                const Gap(20),
+                TextField(
+                  onChanged: (val) {
+                    state.description = val;
+                  },
+                  // cursorHeight: 20,
+                  style: context.theme.bodyMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: 18,
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: 'Description',
+                    fillColor: Colors.transparent,
+                    isDense: true,
+                    contentPadding:
+                        EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.textFieldColor),
+                    ),
+                  ),
+                ),
+                const Gap(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: showCalendar,
+                      child: SvgPicture.asset('assets/icons/task_timer.svg'),
+                    ),
+                    const Gap(32),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle the tap on the second icon (task_tag)
+                      },
+                      child: SvgPicture.asset('assets/icons/task_tag.svg'),
+                    ),
+                    const Gap(32),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle the tap on the third icon (task_flag)
+                      },
+                      child: SvgPicture.asset('assets/icons/task_flag.svg'),
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle the tap on the last icon (task_send)
+                        log(state.title.toString());
+                        log(state.description.toString());
+                        log(_dateRangePickerController.selectedDate.toString());
+                        log(state.time.toString());
+                      },
+                      child: SvgPicture.asset('assets/icons/task_send.svg'),
+                    ),
+                  ],
+                ),
+              ],
+            ).paddingOnly(left: 20, right: 20, bottom: 17),
+          ),
+        ).paddingOnly(bottom: MediaQuery.of(context).viewInsets.bottom);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +303,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            dialog.dialogBuilder(context);
-          },
+          onPressed: showAddTask,
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.white,
           shape: const CircleBorder(),
@@ -105,33 +313,35 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
         bottomNavigationBar: BottomAppBar(
           color: AppColors.bottomNavBar,
           height: 81,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              for (var i = 0; i < 4; i++)
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _currentIndex = i;
-                    });
-                  },
-                  child: Column(
-                    children: [
-                      const Gap(10),
-                      SvgPicture.asset(
-                        _currentIndex == i
-                            ? items[i].selectedIconPath
-                            : items[i].iconPath,
-                        height: 30,
+          child: Observer(
+            builder: (context) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  for (var i = 0; i < 4; i++)
+                    GestureDetector(
+                      onTap: () {
+                        state.currentIndex = i;
+                      },
+                      child: Column(
+                        children: [
+                          const Gap(10),
+                          SvgPicture.asset(
+                            state.currentIndex == i
+                                ? items[i].selectedIconPath
+                                : items[i].iconPath,
+                            height: 30,
+                          ),
+                          Text(items[i].title),
+                        ],
+                      ).paddingOnly(
+                        right: i == 1 ? 15 : 0,
+                        left: i == 2 ? 15 : 0,
                       ),
-                      Text(items[i].title),
-                    ],
-                  ).paddingOnly(
-                    right: i == 1 ? 15 : 0,
-                    left: i == 2 ? 15 : 0,
-                  ),
-                ),
-            ],
+                    ),
+                ],
+              );
+            },
           ),
         ),
       ),

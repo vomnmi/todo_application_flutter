@@ -8,6 +8,7 @@ import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../store/login_state.dart';
 import '../../themes/app_colors.dart';
+import '../home_screen/home_empty_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -97,7 +98,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 58,
                   child: ElevatedButton(
-                    onPressed: loginState.isLoginEnabled ? () {} : null,
+                    onPressed: loginState.isLoginEnabled
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EmptyHomeScreen(),
+                              ),
+                            );
+                          }
+                        : null,
                     style: context.theme.elevatedButtonStyle,
                     child: Text(
                       'Login',

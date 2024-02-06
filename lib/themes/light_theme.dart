@@ -10,7 +10,7 @@ import 'app_fonts.dart';
 final base = ThemeData.light();
 
 final lightTheme = base.copyWith(
-  primaryColor: AppColors.primaryLight,
+  primaryColor: AppColors.primary,
   expansionTileTheme: base.expansionTileTheme.copyWith(
     collapsedIconColor: base.primary,
     collapsedTextColor: base.primary,
@@ -28,16 +28,16 @@ final lightTheme = base.copyWith(
     tilePadding: const EdgeInsets.symmetric(horizontal: 20),
   ),
   colorScheme: base.colorScheme.copyWith(
-    primary: AppColors.primaryLight,
-    primaryContainer: AppColors.primaryContainerLight,
+    primary: AppColors.primary,
+    primaryContainer: AppColors.primary,
     secondary: AppColors.secondaryLight,
-    background: AppColors.backgroundLight,
-    surface: AppColors.surfaceLight,
+    background: AppColors.background,
+    surface: AppColors.bottomNavBar,
     error: AppColors.error,
-    onPrimary: AppColors.onPrimaryLight,
+    onPrimary: AppColors.white,
     onSecondary: AppColors.onSecondaryLight,
     onBackground: AppColors.onBackgroundLight,
-    onSurface: AppColors.onSurfaceLight,
+    onSurface: AppColors.white,
     onError: AppColors.onErrorLight,
   ),
   listTileTheme: ListTileThemeData(
@@ -222,7 +222,7 @@ final lightTheme = base.copyWith(
 
   buttonTheme: base.buttonTheme.copyWith(
     textTheme: ButtonTextTheme.primary,
-    buttonColor: AppColors.primaryLight,
+    buttonColor: AppColors.primary,
   ),
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderRadius: BorderRadius.circular(4),
@@ -249,7 +249,7 @@ final lightTheme = base.copyWith(
             side: BorderSide(
               color: states.contains(MaterialState.disabled)
                   ? AppColors.disabledButtonColor
-                  : AppColors.primaryLight,
+                  : AppColors.primary,
             ),
           );
         },
@@ -297,7 +297,7 @@ final lightTheme = base.copyWith(
         (states) {
           return states.contains(MaterialState.disabled)
               ? AppColors.disabledButtonTextColor
-              : AppColors.primaryLight;
+              : AppColors.primary;
         },
       ),
       backgroundColor: MaterialStateProperty.resolveWith(
@@ -360,7 +360,7 @@ final lightTheme = base.copyWith(
           vertical: 13,
         ),
       ),
-      overlayColor: MaterialStateProperty.all(AppColors.yellow),
+      overlayColor: MaterialStateProperty.all(AppColors.primary),
       elevation: MaterialStateProperty.all(0),
       textStyle: MaterialStateProperty.all(base.textTheme.labelLarge),
       shape: MaterialStateProperty.all(
@@ -372,7 +372,7 @@ final lightTheme = base.copyWith(
         (states) {
           return states.contains(MaterialState.disabled)
               ? AppColors.disabledButtonTextColor
-              : AppColors.yellow;
+              : AppColors.primary;
         },
       ),
       backgroundColor: MaterialStateProperty.resolveWith(
