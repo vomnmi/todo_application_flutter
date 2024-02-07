@@ -16,6 +16,18 @@ class AppColors {
   static const textFieldGrey = Color(0xff1d1d1d);
   static const bottomNavBar = Color(0xff363636);
 
+  // Category Colors
+  static const groceryColor = Color(0xffCCFF80);
+  static const workColor = Color(0xffFF9680);
+  static const sportColor = Color(0xff80FFFF);
+  static const designColor = Color(0xff80FFD9);
+  static const universityColor = Color(0xff809CFF);
+  static const socialColor = Color(0xffFF80EB);
+  static const musicColor = Color(0xffFC80FF);
+  static const healthColor = Color(0xff80FFA3);
+  static const movieColor = Color(0xff80D1FF);
+  static const homeColor = Color(0xffFFCC80);
+
   // light mode colors
   static const primaryLight = Color(0xffDB2828);
   static const primaryContainerLight = Color(0xffDB2828);

@@ -55,8 +55,82 @@ mixin _$HomeState on _HomeState, Store {
     });
   }
 
+  late final _$titleAtom = Atom(name: '_HomeState.title', context: context);
+
+  @override
+  String? get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String? value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  late final _$descriptionAtom =
+      Atom(name: '_HomeState.description', context: context);
+
+  @override
+  String? get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String? value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
+
+  late final _$categoryAtom =
+      Atom(name: '_HomeState.category', context: context);
+
+  @override
+  CategoryModel? get category {
+    _$categoryAtom.reportRead();
+    return super.category;
+  }
+
+  @override
+  set category(CategoryModel? value) {
+    _$categoryAtom.reportWrite(value, super.category, () {
+      super.category = value;
+    });
+  }
+
+  late final _$priorityAtom =
+      Atom(name: '_HomeState.priority', context: context);
+
+  @override
+  String? get priority {
+    _$priorityAtom.reportRead();
+    return super.priority;
+  }
+
+  @override
+  set priority(String? value) {
+    _$priorityAtom.reportWrite(value, super.priority, () {
+      super.priority = value;
+    });
+  }
+
   late final _$_HomeStateActionController =
       ActionController(name: '_HomeState', context: context);
+
+  @override
+  void clearData() {
+    final _$actionInfo =
+        _$_HomeStateActionController.startAction(name: '_HomeState.clearData');
+    try {
+      return super.clearData();
+    } finally {
+      _$_HomeStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setTime(Time time) {
@@ -83,9 +157,13 @@ mixin _$HomeState on _HomeState, Store {
   @override
   String toString() {
     return '''
-    tasks: ${tasks},
-    currentIndex: ${currentIndex},
-    time: ${time}
+tasks: ${tasks},
+currentIndex: ${currentIndex},
+time: ${time},
+title: ${title},
+description: ${description},
+category: ${category},
+priority: ${priority}
     ''';
   }
 }

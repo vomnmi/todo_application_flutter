@@ -13,6 +13,7 @@ import '../../extensions/widget_extension.dart';
 import '../../models/nav_bar_item.dart';
 import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
+import '../../widgets/category_dialog.dart';
 
 class EmptyHomeScreen extends StatefulWidget {
   const EmptyHomeScreen({super.key});
@@ -51,205 +52,64 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
       DateRangePickerController();
 
   void setTime(Time time) {
-    log(time.toString());
     state.setTime(time);
     Navigator.pop(context);
   }
 
-  // Calendar and SetTime Widget
-
   Future<dynamic> showCalendar() async {
     await showModalBottomSheet<dynamic>(
+      backgroundColor: Colors.transparent,
       isScrollControlled: true,
       context: context,
-      backgroundColor: Colors.transparent,
       builder: (context) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: AppColors.bottomNavBar,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SfDateRangePicker(
-                backgroundColor: AppColors.bottomNavBar,
-                selectionColor: AppColors.calendarPurple,
-                selectionRadius: 20,
-                toggleDaySelection: true,
-                showNavigationArrow: true,
-                headerStyle: DateRangePickerHeaderStyle(
-                  textAlign: TextAlign.center,
-                  textStyle: context.theme.displayMedium,
-                ),
-                monthViewSettings:
-                    const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
-                minDate: DateTime(2020),
-                maxDate: DateTime(2030),
-                initialDisplayDate: DateTime.now(),
-                controller: _dateRangePickerController,
-                onCancel: () {
-                  _dateRangePickerController.selectedDate = null;
-                },
+        return CalendarBottomSheet(
+          controller: _dateRangePickerController,
+          onChooseTime: () {
+            Navigator.of(context).push(
+              showPicker(
+                value: Time(hour: 0, minute: 00),
+                onChange: setTime,
+                accentColor: AppColors.primary,
+                themeData: ThemeData.dark(),
+                iosStylePicker: true,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: 153,
-                    height: 48,
-                    child: OutlinedButton(
-                      style: const ButtonStyle(),
-                      onPressed: () => {
-                        Navigator.pop(context),
-                      },
-                      child: const Text(
-                        'Cancel',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 153,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          showPicker(
-                            context: context,
-                            value: Time(hour: 0, minute: 00),
-                            // ignore: avoid_redundant_argument_values
-                            sunrise: const TimeOfDay(hour: 6, minute: 00),
-                            // ignore: prefer_const_constructors
-                            sunset: TimeOfDay(hour: 18, minute: 00),
-                            onChange: setTime,
-                            accentColor: AppColors.primary,
-                            themeData: ThemeData.dark(),
-                            iosStylePicker: true,
-                          ),
-                        );
-                      },
-                      child: const Text('Choose Time'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ).paddingHorizontal(8),
-        ).paddingOnly(top: 274, bottom: 212, left: 24, right: 24);
+            );
+          },
+        );
       },
     );
   }
 
-  // Bottom Nav Bar
+  Future<dynamic> showCategories() async {
+    await showDialog<dynamic>(
+      // backgroundColor: Colors.transparent,
+      // isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return CategoryDialog(
+          onAdd: state.setCategory,
+        );
+      },
+    );
+  }
+
   Future<void> showAddTask() async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return DecoratedBox(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
-            color: AppColors.bottomNavBar,
-          ),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Gap(14),
-                Text(
-                  'Add Task',
-                  style: context.theme.headlineMedium,
-                ),
-                const Gap(14),
-                TextField(
-                  // cursorHeight: 20,
-                  style: context.theme.bodyMedium.copyWith(
-                    color: AppColors.white,
-                    fontSize: 18,
-                  ),
-                  onChanged: (val) {
-                    state.title = val;
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Task',
-                    fillColor: Colors.transparent,
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.textFieldColor),
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                TextField(
-                  onChanged: (val) {
-                    state.description = val;
-                  },
-                  // cursorHeight: 20,
-                  style: context.theme.bodyMedium.copyWith(
-                    color: AppColors.white,
-                    fontSize: 18,
-                  ),
-                  decoration: const InputDecoration(
-                    hintText: 'Description',
-                    fillColor: Colors.transparent,
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.textFieldColor),
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: showCalendar,
-                      child: SvgPicture.asset('assets/icons/task_timer.svg'),
-                    ),
-                    const Gap(32),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle the tap on the second icon (task_tag)
-                      },
-                      child: SvgPicture.asset('assets/icons/task_tag.svg'),
-                    ),
-                    const Gap(32),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle the tap on the third icon (task_flag)
-                      },
-                      child: SvgPicture.asset('assets/icons/task_flag.svg'),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        // Handle the tap on the last icon (task_send)
-                        log(state.title.toString());
-                        log(state.description.toString());
-                        log(_dateRangePickerController.selectedDate.toString());
-                        log(state.time.toString());
-                      },
-                      child: SvgPicture.asset('assets/icons/task_send.svg'),
-                    ),
-                  ],
-                ),
-              ],
-            ).paddingOnly(left: 20, right: 20, bottom: 17),
-          ),
-        ).paddingOnly(bottom: MediaQuery.of(context).viewInsets.bottom);
+        return AddTaskDialog(
+          onTitleChanged: (val) => state.title = val,
+          onDescriptionChanged: (val) => state.description = val,
+          onShowCalendar: showCalendar,
+          onShowCategories: showCategories,
+          onSendTask: () {
+            log(state.title.toString());
+            log(state.description.toString());
+            log(_dateRangePickerController.selectedDate.toString());
+            log(state.time.toString());
+          },
+        );
       },
     );
   }
@@ -288,7 +148,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                     height: 250,
                   ),
                   Text(
-                    'What do you want to do today?',
+                    'What do you want to do?',
                     style: context.theme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
@@ -346,5 +206,187 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class CalendarBottomSheet extends StatelessWidget {
+  final DateRangePickerController controller;
+  final VoidCallback onChooseTime;
+
+  const CalendarBottomSheet({
+    super.key,
+    required this.controller,
+    required this.onChooseTime,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: AppColors.bottomNavBar,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SfDateRangePicker(
+            backgroundColor: AppColors.bottomNavBar,
+            selectionColor: AppColors.calendarPurple,
+            selectionRadius: 20,
+            toggleDaySelection: true,
+            showNavigationArrow: true,
+            headerStyle: DateRangePickerHeaderStyle(
+              textAlign: TextAlign.center,
+              textStyle: context.theme.displayMedium,
+            ),
+            monthViewSettings:
+                const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
+            minDate: DateTime(2020),
+            maxDate: DateTime(2030),
+            initialDisplayDate: DateTime.now(),
+            controller: controller,
+            onCancel: () {
+              controller.selectedDate = null;
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: 153,
+                height: 48,
+                child: OutlinedButton(
+                  style: const ButtonStyle(),
+                  onPressed: () => {
+                    Navigator.pop(context),
+                  },
+                  child: const Text(
+                    'Cancel',
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 153,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: onChooseTime,
+                  child: const Text('Choose Time'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ).paddingHorizontal(8),
+    ).paddingOnly(top: 274, bottom: 212, left: 24, right: 24);
+  }
+}
+
+class AddTaskDialog extends StatelessWidget {
+  final Function(String) onTitleChanged;
+  final Function(String) onDescriptionChanged;
+  final VoidCallback onShowCalendar;
+  final VoidCallback onShowCategories;
+  final VoidCallback onSendTask;
+
+  const AddTaskDialog({
+    super.key,
+    required this.onTitleChanged,
+    required this.onDescriptionChanged,
+    required this.onShowCalendar,
+    required this.onShowCategories,
+    required this.onSendTask,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        color: AppColors.bottomNavBar,
+      ),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(14),
+            Text(
+              'Add Task',
+              style: context.theme.headlineMedium,
+            ),
+            const Gap(14),
+            TextField(
+              // cursorHeight: 20,
+              style: context.theme.bodyMedium.copyWith(
+                color: AppColors.white,
+                fontSize: 18,
+              ),
+              onChanged: onTitleChanged,
+              decoration: const InputDecoration(
+                hintText: 'Task',
+                fillColor: Colors.transparent,
+                isDense: true,
+                contentPadding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.textFieldColor),
+                ),
+              ),
+            ),
+            const Gap(20),
+            TextField(
+              onChanged: onDescriptionChanged,
+              style: context.theme.bodyMedium.copyWith(
+                color: AppColors.white,
+                fontSize: 18,
+              ),
+              decoration: const InputDecoration(
+                hintText: 'Description',
+                fillColor: Colors.transparent,
+                isDense: true,
+                contentPadding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.textFieldColor),
+                ),
+              ),
+            ),
+            const Gap(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: onShowCalendar,
+                  child: SvgPicture.asset('assets/icons/task_timer.svg'),
+                ),
+                const Gap(32),
+                GestureDetector(
+                  onTap: onShowCategories,
+                  child: SvgPicture.asset('assets/icons/task_tag.svg'),
+                ),
+                const Gap(32),
+                GestureDetector(
+                  onTap: () {
+                    // Handle the tap on the third icon (task_flag)
+                  },
+                  child: SvgPicture.asset('assets/icons/task_flag.svg'),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: onSendTask,
+                  child: SvgPicture.asset('assets/icons/task_send.svg'),
+                ),
+              ],
+            ),
+          ],
+        ).paddingOnly(left: 20, right: 20, bottom: 17),
+      ),
+    ).paddingOnly(bottom: MediaQuery.of(context).viewInsets.bottom);
   }
 }

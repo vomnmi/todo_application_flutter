@@ -14,21 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
-  return _TaskModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$TaskModel {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get priority => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
+  CategoryModel? get category => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
   TimeModel? get time => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TaskModelCopyWith<TaskModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -44,7 +39,7 @@ abstract class $TaskModelCopyWith<$Res> {
       String title,
       String? description,
       String? priority,
-      String? category,
+      CategoryModel? category,
       DateTime? date,
       TimeModel? time});
 
@@ -92,7 +87,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as CategoryModel?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -130,7 +125,7 @@ abstract class _$$TaskModelImplCopyWith<$Res>
       String title,
       String? description,
       String? priority,
-      String? category,
+      CategoryModel? category,
       DateTime? date,
       TimeModel? time});
 
@@ -177,7 +172,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as CategoryModel?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -191,7 +186,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$TaskModelImpl implements _TaskModel {
   const _$TaskModelImpl(
       {required this.id,
@@ -202,9 +197,6 @@ class _$TaskModelImpl implements _TaskModel {
       this.date,
       this.time});
 
-  factory _$TaskModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TaskModelImplFromJson(json);
-
   @override
   final String id;
   @override
@@ -214,7 +206,7 @@ class _$TaskModelImpl implements _TaskModel {
   @override
   final String? priority;
   @override
-  final String? category;
+  final CategoryModel? category;
   @override
   final DateTime? date;
   @override
@@ -242,7 +234,6 @@ class _$TaskModelImpl implements _TaskModel {
             (identical(other.time, time) || other.time == time));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, title, description, priority, category, date, time);
@@ -252,13 +243,6 @@ class _$TaskModelImpl implements _TaskModel {
   @pragma('vm:prefer-inline')
   _$$TaskModelImplCopyWith<_$TaskModelImpl> get copyWith =>
       __$$TaskModelImplCopyWithImpl<_$TaskModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TaskModelImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _TaskModel implements TaskModel {
@@ -267,12 +251,9 @@ abstract class _TaskModel implements TaskModel {
       required final String title,
       final String? description,
       final String? priority,
-      final String? category,
+      final CategoryModel? category,
       final DateTime? date,
       final TimeModel? time}) = _$TaskModelImpl;
-
-  factory _TaskModel.fromJson(Map<String, dynamic> json) =
-      _$TaskModelImpl.fromJson;
 
   @override
   String get id;
@@ -283,7 +264,7 @@ abstract class _TaskModel implements TaskModel {
   @override
   String? get priority;
   @override
-  String? get category;
+  CategoryModel? get category;
   @override
   DateTime? get date;
   @override
