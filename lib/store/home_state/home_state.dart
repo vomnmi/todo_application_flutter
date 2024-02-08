@@ -2,6 +2,7 @@ import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/category_model.dart';
+import '../../models/priority_model.dart';
 import '../../models/task_model/task_model.dart';
 import '../../models/time_model/time_model.dart';
 
@@ -29,10 +30,13 @@ abstract class _HomeState with Store {
   CategoryModel? category;
 
   @observable
-  String? priority;
+  PriorityModel? priority;
 
   @action
   void setCategory(CategoryModel category) => this.category = category;
+
+  @action
+  void setPriority(PriorityModel priority) => this.priority = priority;
 
   @action
   void clearData() {
@@ -54,6 +58,7 @@ abstract class _HomeState with Store {
       description: 'description',
       date: date,
       category: category,
+      priority: priority,
       time: TimeModel(
         minute: time?.second ?? 0,
         hour: time?.hour ?? 0,

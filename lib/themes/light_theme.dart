@@ -50,7 +50,7 @@ final lightTheme = base.copyWith(
     shadowColor: AppColors.elevationColor,
     elevation: 2,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(4),
     ),
     clipBehavior: Clip.none,
   ),
@@ -258,7 +258,7 @@ final lightTheme = base.copyWith(
         (states) {
           return states.contains(MaterialState.disabled)
               ? AppColors.disabledButtonTextColor
-              : AppColors.disabledButtonTextColor;
+              : AppColors.white;
         },
       ),
       overlayColor: const MaterialStatePropertyAll(Colors.transparent),

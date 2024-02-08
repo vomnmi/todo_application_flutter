@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../extensions/context_extension.dart';
@@ -14,6 +15,7 @@ import '../../models/nav_bar_item.dart';
 import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
 import '../../widgets/category_dialog.dart';
+import '../../widgets/priority_dialog.dart';
 
 class EmptyHomeScreen extends StatefulWidget {
   const EmptyHomeScreen({super.key});
@@ -93,6 +95,17 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
     );
   }
 
+  Future<dynamic> showPriorities() async {
+    await showDialog<dynamic>(
+      context: context,
+      builder: (context) {
+        return PriorityDialog(
+          onSelectingPriority: state.setPriority,
+        );
+      },
+    );
+  }
+
   Future<void> showAddTask() async {
     await showModalBottomSheet<void>(
       isScrollControlled: true,
@@ -103,6 +116,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
           onDescriptionChanged: (val) => state.description = val,
           onShowCalendar: showCalendar,
           onShowCategories: showCategories,
+          onShowPriorities: showPriorities,
           onSendTask: () {
             log(state.title.toString());
             log(state.description.toString());
@@ -231,7 +245,7 @@ class CalendarBottomSheet extends StatelessWidget {
         children: [
           SfDateRangePicker(
             backgroundColor: AppColors.bottomNavBar,
-            selectionColor: AppColors.calendarPurple,
+            selectionColor: AppColors.purple,
             selectionRadius: 20,
             toggleDaySelection: true,
             showNavigationArrow: true,
@@ -252,25 +266,35 @@ class CalendarBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                width: 153,
-                height: 48,
-                child: OutlinedButton(
-                  style: const ButtonStyle(),
-                  onPressed: () => {
-                    Navigator.pop(context),
+              Expanded(
+                child: TextButton(
+                  style: const ButtonStyle(
+                    side: MaterialStatePropertyAll(BorderSide.none),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                  child: const Text(
+                  child: Text(
                     'Cancel',
+                    style: GoogleFonts.lato(
+                      color: AppColors.purple,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                width: 153,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: onChooseTime,
-                  child: const Text('Choose Time'),
+              Expanded(
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: onChooseTime,
+                    child: Text(
+                      'Choose Time',
+                      style: context.theme.headlineSmall
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -286,6 +310,7 @@ class AddTaskDialog extends StatelessWidget {
   final Function(String) onDescriptionChanged;
   final VoidCallback onShowCalendar;
   final VoidCallback onShowCategories;
+  final VoidCallback onShowPriorities;
   final VoidCallback onSendTask;
 
   const AddTaskDialog({
@@ -294,6 +319,7 @@ class AddTaskDialog extends StatelessWidget {
     required this.onDescriptionChanged,
     required this.onShowCalendar,
     required this.onShowCategories,
+    required this.onShowPriorities,
     required this.onSendTask,
   });
 
@@ -372,9 +398,7 @@ class AddTaskDialog extends StatelessWidget {
                 ),
                 const Gap(32),
                 GestureDetector(
-                  onTap: () {
-                    // Handle the tap on the third icon (task_flag)
-                  },
+                  onTap: onShowPriorities,
                   child: SvgPicture.asset('assets/icons/task_flag.svg'),
                 ),
                 const Spacer(),

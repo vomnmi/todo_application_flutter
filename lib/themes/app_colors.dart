@@ -6,7 +6,7 @@ class AppColors {
   // My App colors
   static const background = Color(0xff121212);
   static const primary = Color(0xff8875FF);
-  static const calendarPurple = Color(0xff8687E7);
+  static const purple = Color(0xff8687E7);
   static const disabledButton = Color(0x508875FF);
   static const disabledTextButton = Color(0x30FFFFFF);
   static const textGrey = Color(0x44FFFFFF);
@@ -27,6 +27,9 @@ class AppColors {
   static const healthColor = Color(0xff80FFA3);
   static const movieColor = Color(0xff80D1FF);
   static const homeColor = Color(0xffFFCC80);
+
+  // Priority Color
+  static const priority = Color(0xFF272727);
 
   // light mode colors
   static const primaryLight = Color(0xffDB2828);

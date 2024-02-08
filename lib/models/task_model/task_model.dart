@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../category_model.dart';
+import '../priority_model.dart';
 import '../time_model/time_model.dart';
 
 part 'task_model.freezed.dart';
@@ -11,7 +12,7 @@ class TaskModel with _$TaskModel {
     required String id,
     required String title,
     String? description,
-    String? priority,
+    PriorityModel? priority,
     CategoryModel? category,
     DateTime? date,
     TimeModel? time,

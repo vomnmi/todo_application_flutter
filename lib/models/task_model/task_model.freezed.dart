@@ -19,7 +19,7 @@ mixin _$TaskModel {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  String? get priority => throw _privateConstructorUsedError;
+  PriorityModel? get priority => throw _privateConstructorUsedError;
   CategoryModel? get category => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
   TimeModel? get time => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $TaskModelCopyWith<$Res> {
       {String id,
       String title,
       String? description,
-      String? priority,
+      PriorityModel? priority,
       CategoryModel? category,
       DateTime? date,
       TimeModel? time});
@@ -83,7 +83,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
       priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as PriorityModel?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ abstract class _$$TaskModelImplCopyWith<$Res>
       {String id,
       String title,
       String? description,
-      String? priority,
+      PriorityModel? priority,
       CategoryModel? category,
       DateTime? date,
       TimeModel? time});
@@ -168,7 +168,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
       priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as PriorityModel?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -204,7 +204,7 @@ class _$TaskModelImpl implements _TaskModel {
   @override
   final String? description;
   @override
-  final String? priority;
+  final PriorityModel? priority;
   @override
   final CategoryModel? category;
   @override
@@ -250,7 +250,7 @@ abstract class _TaskModel implements TaskModel {
       {required final String id,
       required final String title,
       final String? description,
-      final String? priority,
+      final PriorityModel? priority,
       final CategoryModel? category,
       final DateTime? date,
       final TimeModel? time}) = _$TaskModelImpl;
@@ -262,7 +262,7 @@ abstract class _TaskModel implements TaskModel {
   @override
   String? get description;
   @override
-  String? get priority;
+  PriorityModel? get priority;
   @override
   CategoryModel? get category;
   @override

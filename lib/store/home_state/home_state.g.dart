@@ -106,13 +106,13 @@ mixin _$HomeState on _HomeState, Store {
       Atom(name: '_HomeState.priority', context: context);
 
   @override
-  String? get priority {
+  PriorityModel? get priority {
     _$priorityAtom.reportRead();
     return super.priority;
   }
 
   @override
-  set priority(String? value) {
+  set priority(PriorityModel? value) {
     _$priorityAtom.reportWrite(value, super.priority, () {
       super.priority = value;
     });
@@ -120,6 +120,28 @@ mixin _$HomeState on _HomeState, Store {
 
   late final _$_HomeStateActionController =
       ActionController(name: '_HomeState', context: context);
+
+  @override
+  void setCategory(CategoryModel category) {
+    final _$actionInfo = _$_HomeStateActionController.startAction(
+        name: '_HomeState.setCategory');
+    try {
+      return super.setCategory(category);
+    } finally {
+      _$_HomeStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPriority(PriorityModel priority) {
+    final _$actionInfo = _$_HomeStateActionController.startAction(
+        name: '_HomeState.setPriority');
+    try {
+      return super.setPriority(priority);
+    } finally {
+      _$_HomeStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void clearData() {

@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
-import '../categories/categoriesList.dart';
 import '../extensions/context_extension.dart';
+import '../lists/categoriesList.dart';
 import '../models/category_model.dart';
 import '../store/category_state.dart';
 import '../themes/app_colors.dart';

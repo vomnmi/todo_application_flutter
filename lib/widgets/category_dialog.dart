@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../categories/categoriesList.dart';
 import '../extensions/widget_extension.dart';
+import '../lists/categoriesList.dart';
 import '../models/category_model.dart';
 import '../store/category_state.dart';
 import '../themes/app_colors.dart';
