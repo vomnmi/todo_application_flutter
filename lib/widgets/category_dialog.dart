@@ -48,7 +48,7 @@ class CategoryDialog extends StatelessWidget {
                 child: GridView.count(
                   crossAxisCount: 3,
                   mainAxisSpacing: 16,
-                  crossAxisSpacing: 30,
+                  crossAxisSpacing: 29,
                   children: [
                     for (final category in categories)
                       CategoryCard(

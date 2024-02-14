@@ -54,17 +54,33 @@ abstract class _HomeState with Store {
   void createTask(DateTime date) {
     final task = TaskModel(
       id: DateTime.fromMicrosecondsSinceEpoch(1000).toIso8601String(),
-      title: 'title',
-      description: 'description',
+      title: title!,
+      description: description,
       date: date,
       category: category,
       priority: priority,
       time: TimeModel(
-        minute: time?.second ?? 0,
-        hour: time?.hour ?? 0,
+        minute: time?.hour != null
+            ? time!.hour < 10
+                ? '0${time!.hour}'
+                : '${time!.hour}'
+            : '',
+        hour: time?.minute != null
+            ? time!.minute < 10
+                ? '0${time!.minute}'
+                : '${time!.hour}'
+            : '',
       ),
     );
     tasks.add(task);
     clearData();
+  }
+
+  bool isToday({
+    required DateTime first,
+  }) {
+    final now = DateTime.now().toLocal();
+
+    return first == DateTime(now.year, now.month, now.day);
   }
 }

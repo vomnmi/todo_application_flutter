@@ -20,8 +20,8 @@ TimeModel _$TimeModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TimeModel {
-  int get minute => throw _privateConstructorUsedError;
-  int get hour => throw _privateConstructorUsedError;
+  String get minute => throw _privateConstructorUsedError;
+  String get hour => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $TimeModelCopyWith<$Res> {
   factory $TimeModelCopyWith(TimeModel value, $Res Function(TimeModel) then) =
       _$TimeModelCopyWithImpl<$Res, TimeModel>;
   @useResult
-  $Res call({int minute, int hour});
+  $Res call({String minute, String hour});
 }
 
 /// @nodoc
@@ -57,11 +57,11 @@ class _$TimeModelCopyWithImpl<$Res, $Val extends TimeModel>
       minute: null == minute
           ? _value.minute
           : minute // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       hour: null == hour
           ? _value.hour
           : hour // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ) as $Val);
   }
 }
@@ -74,7 +74,7 @@ abstract class _$$TimeModelImplCopyWith<$Res>
       __$$TimeModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int minute, int hour});
+  $Res call({String minute, String hour});
 }
 
 /// @nodoc
@@ -95,11 +95,11 @@ class __$$TimeModelImplCopyWithImpl<$Res>
       minute: null == minute
           ? _value.minute
           : minute // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       hour: null == hour
           ? _value.hour
           : hour // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ));
   }
 }
@@ -113,9 +113,9 @@ class _$TimeModelImpl implements _TimeModel {
       _$$TimeModelImplFromJson(json);
 
   @override
-  final int minute;
+  final String minute;
   @override
-  final int hour;
+  final String hour;
 
   @override
   String toString() {
@@ -151,15 +151,16 @@ class _$TimeModelImpl implements _TimeModel {
 
 abstract class _TimeModel implements TimeModel {
   const factory _TimeModel(
-      {required final int minute, required final int hour}) = _$TimeModelImpl;
+      {required final String minute,
+      required final String hour}) = _$TimeModelImpl;
 
   factory _TimeModel.fromJson(Map<String, dynamic> json) =
       _$TimeModelImpl.fromJson;
 
   @override
-  int get minute;
+  String get minute;
   @override
-  int get hour;
+  String get hour;
   @override
   @JsonKey(ignore: true)
   _$$TimeModelImplCopyWith<_$TimeModelImpl> get copyWith =>

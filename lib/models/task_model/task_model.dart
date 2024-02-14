@@ -18,3 +18,11 @@ class TaskModel with _$TaskModel {
     TimeModel? time,
   }) = _TaskModel;
 }
+
+extension IsToday on TaskModel {
+  bool get getIsToday {
+    final now = DateTime.now().toLocal();
+
+    return date == DateTime(now.year, now.month, now.day);
+  }
+}

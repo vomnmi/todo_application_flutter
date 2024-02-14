@@ -6,8 +6,8 @@ part 'time_model.g.dart';
 @freezed
 class TimeModel with _$TimeModel {
   const factory TimeModel({
-    required int minute,
-    required int hour,
+    required String minute,
+    required String hour,
   }) = _TimeModel;
 
   factory TimeModel.fromJson(Map<String, dynamic> json) =>

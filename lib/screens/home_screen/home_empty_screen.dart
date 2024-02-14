@@ -16,6 +16,7 @@ import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
 import '../../widgets/category_dialog.dart';
 import '../../widgets/priority_dialog.dart';
+import '../../widgets/task_card.dart';
 
 class EmptyHomeScreen extends StatefulWidget {
   const EmptyHomeScreen({super.key});
@@ -118,6 +119,8 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
           onShowCategories: showCategories,
           onShowPriorities: showPriorities,
           onSendTask: () {
+            state.createTask(_dateRangePickerController.selectedDate!);
+            Navigator.pop(context);
             log(state.title.toString());
             log(state.description.toString());
             log(_dateRangePickerController.selectedDate.toString());
@@ -153,25 +156,46 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
               ],
             ).paddingOnly(top: 15, left: 20, right: 20),
             const Gap(70),
-            Center(
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/illustrations/home_screen.svg',
-                    width: 250,
-                    height: 250,
-                  ),
-                  Text(
-                    'What do you want to do?',
-                    style: context.theme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const Gap(10),
-                  Text(
-                    'Tap + to add your tasks',
-                    style: context.theme.headlineSmall,
-                  ),
-                ],
+            SizedBox(
+              height: 330,
+              child: Observer(
+                builder: (context) {
+                  if (state.tasks.isNotEmpty) {
+                    return ListView.separated(
+                      itemCount: state.tasks.length,
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        return TaskCard(
+                          taskModel: state.tasks[index],
+                          onCheckboxChanged: (isChecked) {},
+                        );
+                      },
+                    );
+                  }
+                  return Center(
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/illustrations/home_screen.svg',
+                          width: 250,
+                          height: 250,
+                        ),
+                        Text(
+                          'What do you want to do?',
+                          style: context.theme.headlineMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        const Gap(10),
+                        Text(
+                          'Tap + to add your tasks',
+                          style: context.theme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

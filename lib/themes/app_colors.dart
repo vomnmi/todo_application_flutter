@@ -15,6 +15,8 @@ class AppColors {
   static const hintTextColor = Color(0xff535353);
   static const textFieldGrey = Color(0xff1d1d1d);
   static const bottomNavBar = Color(0xff363636);
+  static const blackBackground = Color(0xff121212);
+  static const editTaskButton = Color(0xff1d1d1d);
 
   // Category Colors
   static const groceryColor = Color(0xffCCFF80);

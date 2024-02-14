@@ -8,8 +8,8 @@ part of 'time_model.dart';
 
 _$TimeModelImpl _$$TimeModelImplFromJson(Map<String, dynamic> json) =>
     _$TimeModelImpl(
-      minute: json['minute'] as int,
-      hour: json['hour'] as int,
+      minute: json['minute'] as String,
+      hour: json['hour'] as String,
     );
 
 Map<String, dynamic> _$$TimeModelImplToJson(_$TimeModelImpl instance) =>

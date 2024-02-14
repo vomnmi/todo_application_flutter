@@ -62,7 +62,7 @@ extension WidgetModifier on Widget {
   Widget withPrimaryGradient() {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (Rect bounds) =>
+      shaderCallback: (bounds) =>
           AppColors.primaryGradient.createShader(bounds),
       child: this,
     );
