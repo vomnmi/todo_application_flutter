@@ -60,15 +60,15 @@ abstract class _HomeState with Store {
       category: category,
       priority: priority,
       time: TimeModel(
-        minute: time?.hour != null
+        hour: time?.hour != null
             ? time!.hour < 10
                 ? '0${time!.hour}'
                 : '${time!.hour}'
             : '',
-        hour: time?.minute != null
-            ? time!.minute < 10
+        minute: time?.minute != null
+            ? time!.minute <= 9
                 ? '0${time!.minute}'
-                : '${time!.hour}'
+                : '${time!.minute}'
             : '',
       ),
     );

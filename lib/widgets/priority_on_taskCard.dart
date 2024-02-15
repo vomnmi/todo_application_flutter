@@ -16,7 +16,7 @@ class PriorityOnTaskCard extends StatelessWidget {
     super.key,
     required this.priorityModel,
     this.backgroundColor,
-    this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 7.5),
+    this.padding = const EdgeInsets.symmetric(horizontal: 6, vertical: 6.5),
     this.showBorder = true,
   });
 

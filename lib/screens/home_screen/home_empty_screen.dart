@@ -156,8 +156,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
               ],
             ).paddingOnly(top: 15, left: 20, right: 20),
             const Gap(70),
-            SizedBox(
-              height: 330,
+            Expanded(
               child: Observer(
                 builder: (context) {
                   if (state.tasks.isNotEmpty) {

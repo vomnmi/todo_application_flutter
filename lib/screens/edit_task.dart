@@ -104,21 +104,30 @@ class _EditTaskState extends State<EditTask> {
                 ),
               ),
               const Gap(21),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.taskModel.title,
-                    style: context.theme.headlineMedium,
-                  ),
-                  const Gap(10),
-                  Text(
-                    widget.taskModel.description!,
-                    style: context.theme.headlineSmall
-                        .copyWith(color: AppColors.grey),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            widget.taskModel.title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: context.theme.headlineMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (widget.taskModel.description != null)
+                      Text(
+                        widget.taskModel.description!,
+                        style: context.theme.headlineSmall
+                            .copyWith(color: AppColors.grey),
+                      ).paddingOnly(top: 10),
+                  ],
+                ),
               ),
               const Spacer(),
               SvgPicture.asset(
@@ -147,10 +156,8 @@ class _EditTaskState extends State<EditTask> {
                 ),
                 child: Text(
                   widget.taskModel.getIsToday
-                      ? 'Today At ${widget.taskModel.time!.hour} : ${widget.taskModel.time!.minute}'
-                      : DateFormat('dd.MM').format(
-                          widget.taskModel.date!.toLocal(),
-                        ),
+                      ? 'Today At ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}'
+                      : '${DateFormat('dd.MM.yy').format(widget.taskModel.date!.toLocal())} At ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}',
                   style: context.theme.bodyMedium.copyWith(
                     color: AppColors.white,
                   ),
@@ -194,6 +201,21 @@ class _EditTaskState extends State<EditTask> {
                 showBorder: false,
               ),
             ],
+          ),
+          const Gap(31),
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset('assets/icons/trash.svg'),
+                const Gap(11),
+                Text(
+                  'Delete Task',
+                  style: context.theme.headlineSmall
+                      .copyWith(color: AppColors.deleteTaskButton),
+                ),
+              ],
+            ),
           ),
         ],
       ).paddingOnly(left: 24, right: 24, top: 35),

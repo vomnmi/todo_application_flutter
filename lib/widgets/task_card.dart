@@ -78,31 +78,40 @@ class _TaskCardState extends State<TaskCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Do Math Homework',
-                        style: context.theme.headlineSmall
-                            .copyWith(fontWeight: FontWeight.w400),
-                      ),
-                      const Gap(6),
-                      if (taskModel.date != null)
-                        Text(
-                          taskModel.getIsToday
-                              ? 'Today At ${taskModel.time!.hour} : ${taskModel.time!.minute}'
-                              : DateFormat('dd.MM').format(
-                                  taskModel.date!.toLocal(),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                taskModel.title,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: context.theme.headlineSmall.copyWith(
+                                  fontWeight: FontWeight.w400,
                                 ),
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.lato(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: AppColors.grey,
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                    ],
-                  ).paddingOnly(bottom: 12),
+                        const Gap(6),
+                        if (taskModel.date != null)
+                          Text(
+                            taskModel.getIsToday
+                                ? 'Today \nAt ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}'
+                                : '${DateFormat('dd.MM.yy').format(widget.taskModel.date!.toLocal())} \nAt ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.lato(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: AppColors.grey,
+                            ),
+                          ),
+                      ],
+                    ).paddingOnly(bottom: 12),
+                  ),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
