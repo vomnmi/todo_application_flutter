@@ -2,18 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../extensions/context_extension.dart';
-import '../extensions/widget_extension.dart';
-import '../lists/priority_list.dart';
-import '../models/priority_model.dart';
-import '../store/priority_state.dart';
-import '../themes/app_colors.dart';
-import 'priority_card.dart';
+import '../../extensions/context_extension.dart';
+import '../../extensions/widget_extension.dart';
+import '../../lists/priority_list.dart';
+import '../../models/task_model/task_model.dart';
+import '../../store/home_state/home_state.dart';
+import '../../store/priority_state.dart';
+import '../../themes/app_colors.dart';
+import '../priority_card.dart';
 
-class PriorityDialog extends StatelessWidget {
+class EditPriority extends StatefulWidget {
+  final int index;
+  const EditPriority({super.key, required this.index});
+
+  @override
+  State<EditPriority> createState() => _EditPriorityState();
+}
+
+class _EditPriorityState extends State<EditPriority> {
   final PriorityState _priorityState = PriorityState();
-  final void Function(PriorityModel) onSelectingPriority;
-  PriorityDialog({super.key, required this.onSelectingPriority});
+
+  final HomeState state = HomeState();
+
+  TaskModel get taskModel => state.tasks[widget.index];
+
+  @override
+  void initState() {
+    super.initState();
+    _priorityState.selectedPriorityIndex =
+        state.tasks[widget.index].priority?.priorityNumber ?? -1;
+  }
+
+  void onEdit(BuildContext context) {
+    final editedTask = state.tasks[widget.index]
+        .copyWith(priority: priorities[_priorityState.selectedPriorityIndex]);
+    state.editTask(editedTask);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +87,22 @@ class PriorityDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: TextButton(
-                      style: const ButtonStyle(
-                        side: MaterialStatePropertyAll(BorderSide.none),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Cancel',
-                        style: GoogleFonts.lato(
-                          color: AppColors.purple,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                    child: SizedBox(
+                      height: 48,
+                      child: TextButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Cancel',
+                          style: GoogleFonts.lato(
+                            color: AppColors.purple,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),
@@ -85,12 +113,7 @@ class PriorityDialog extends StatelessWidget {
                       height: 48,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_priorityState.selectedPriorityIndex != -1) {
-                            onSelectingPriority(
-                              priorities[_priorityState.selectedPriorityIndex],
-                            );
-                            Navigator.pop(context);
-                          }
+                          onEdit(context);
                         },
                         child: Text(
                           'Edit',

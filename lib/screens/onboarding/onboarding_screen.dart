@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../extensions/context_extension.dart';
+import '../../extensions/widget_extension.dart';
 import '../../themes/app_colors.dart';
 import '../welcome_screen.dart';
 import 'onboarding_content.dart';
@@ -102,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               textAlign: TextAlign.center,
               style: context.theme.headlineSmall,
             ),
-            const Gap(200),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24),
               child: Row(
@@ -160,7 +161,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
           ],
-        ),
+        ).paddingOnly(bottom: 15),
       ),
     );
   }

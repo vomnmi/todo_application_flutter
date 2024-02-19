@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,17 +9,18 @@ import '../extensions/context_extension.dart';
 import '../extensions/widget_extension.dart';
 import '../models/task_model/task_model.dart';
 import '../screens/edit_task.dart';
+import '../store/home_state/home_state.dart';
 import '../themes/app_colors.dart';
 import 'category_on_taskCard.dart';
 import 'priority_on_taskCard.dart';
 
 class TaskCard extends StatefulWidget {
-  final TaskModel taskModel;
+  final int index;
   final void Function(bool) onCheckboxChanged;
 
   const TaskCard({
     super.key,
-    required this.taskModel,
+    required this.index,
     required this.onCheckboxChanged,
   });
 
@@ -27,18 +30,20 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   bool isChecked = false;
+  final state = HomeState();
+
+  TaskModel get taskModel => state.tasks[widget.index];
 
   @override
   Widget build(BuildContext context) {
-    final taskModel = widget.taskModel;
-
     return GestureDetector(
       onTap: () {
+        log(state.tasks.toString());
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => EditTask(
-              taskModel: taskModel,
+              index: widget.index,
               isChecked: isChecked,
               onCheckboxChanged: widget.onCheckboxChanged,
             ),
@@ -100,8 +105,8 @@ class _TaskCardState extends State<TaskCard> {
                         if (taskModel.date != null)
                           Text(
                             taskModel.getIsToday
-                                ? 'Today \nAt ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}'
-                                : '${DateFormat('dd.MM.yy').format(widget.taskModel.date!.toLocal())} \nAt ${widget.taskModel.time!.hour}:${widget.taskModel.time!.minute}',
+                                ? 'Today \nAt ${taskModel.time!.hour}:${taskModel.time!.minute}'
+                                : '${DateFormat('dd.MM.yy').format(taskModel.date!.toLocal())} \nAt ${taskModel.time!.hour}:${taskModel.time!.minute}',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w400,

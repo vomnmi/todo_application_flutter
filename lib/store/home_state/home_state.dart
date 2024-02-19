@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:mobx/mobx.dart';
 
@@ -8,7 +10,16 @@ import '../../models/time_model/time_model.dart';
 
 part 'home_state.g.dart';
 
-class HomeState = _HomeState with _$HomeState;
+class HomeState extends THomeState {
+  static final HomeState _singleton = HomeState._internal();
+  factory HomeState() {
+    return _singleton;
+  }
+
+  HomeState._internal();
+}
+
+class THomeState = _HomeState with _$HomeState;
 
 abstract class _HomeState with Store {
   @observable
@@ -74,6 +85,25 @@ abstract class _HomeState with Store {
     );
     tasks.add(task);
     clearData();
+  }
+
+  @action
+  void editTask(TaskModel task) {
+    tasks = tasks
+        .map((element) {
+          if (element.id == task.id) {
+            return task;
+          }
+          return element;
+        })
+        .toList()
+        .asObservable();
+  }
+
+  @action
+  void deleteTask(TaskModel task) {
+    log(tasks.length.toString());
+    tasks.remove(task);
   }
 
   bool isToday({

@@ -74,6 +74,7 @@ dependencies:
   build_runner: ^2.3.3
   json_serializable: ^6.7.1
   intl: ^0.18.1
+  get_it: ^7.6.7
 
 dev_dependencies:
   flutter_test:

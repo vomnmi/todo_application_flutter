@@ -46,47 +46,58 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               style: TextStyle(color: Colors.grey, fontSize: 16),
               textAlign: TextAlign.center,
             ),
-            const Gap(387),
-            SizedBox(
-              width: 327,
-              height: 58,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+            const Spacer(),
+            Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    style: context.theme.elevatedButtonStyle,
+                    child: Text(
+                      'LOGIN',
+                      style: context.theme.headlineSmall,
                     ),
-                  );
-                },
-                style: context.theme.elevatedButtonStyle,
-                child: const Text('LOGIN'),
-              ),
-            ),
-            const Gap(28),
-            SizedBox(
-              width: 327,
-              height: 58,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegisterScreen(),
-                    ),
-                  );
-                },
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.transparent),
-                  foregroundColor: MaterialStatePropertyAll(Colors.white),
-                  overlayColor: MaterialStatePropertyAll(AppColors.primary),
-                  side: MaterialStatePropertyAll(
-                    BorderSide(color: AppColors.primary),
                   ),
                 ),
-                child: const Text('CREATE ACCOUNT'),
-              ),
-            ),
+                const Gap(28),
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                    style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.transparent),
+                      foregroundColor: MaterialStatePropertyAll(Colors.white),
+                      overlayColor: MaterialStatePropertyAll(AppColors.primary),
+                      side: MaterialStatePropertyAll(
+                        BorderSide(color: AppColors.primary),
+                      ),
+                    ),
+                    child: Text(
+                      'CREATE ACCOUNT',
+                      style: context.theme.headlineSmall,
+                    ),
+                  ),
+                ),
+              ],
+            ).paddingSymmetric(),
           ],
         ),
       ),

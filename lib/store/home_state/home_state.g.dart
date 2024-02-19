@@ -177,6 +177,28 @@ mixin _$HomeState on _HomeState, Store {
   }
 
   @override
+  void editTask(TaskModel task) {
+    final _$actionInfo =
+        _$_HomeStateActionController.startAction(name: '_HomeState.editTask');
+    try {
+      return super.editTask(task);
+    } finally {
+      _$_HomeStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void deleteTask(TaskModel task) {
+    final _$actionInfo =
+        _$_HomeStateActionController.startAction(name: '_HomeState.deleteTask');
+    try {
+      return super.deleteTask(task);
+    } finally {
+      _$_HomeStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 tasks: ${tasks},

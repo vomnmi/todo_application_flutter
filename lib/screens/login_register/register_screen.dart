@@ -8,6 +8,7 @@ import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../store/register_state.dart';
 import '../../themes/app_colors.dart';
+import '../home_screen/home_empty_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          //here
           FocusScope.of(context).unfocus();
           TextEditingController().clear();
         },
@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Gap(20),
+                        const Gap(12),
                         InkWell(
                           onTap: () => {
                             Navigator.pop(context),
@@ -47,44 +47,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: const Icon(
                             Icons.arrow_back_ios,
                             color: AppColors.white,
-                            size: 24,
+                            size: 20,
                           ),
                         ),
-                        const Gap(24),
+                        const Gap(16),
                         Text(
                           'Register',
-                          style: context.theme.bodyLarge,
+                          style: context.theme.bodyMedium
+                              .copyWith(fontSize: 32, color: AppColors.white),
                         ),
-                        const Gap(20),
+                        const Gap(14),
                         Text(
                           'Username',
-                          style: context.theme.headlineSmall,
+                          style: context.theme.headlineSmall
+                              .copyWith(fontSize: 14),
                         ),
                         const Gap(8),
                         TextField(
-                          cursorHeight: 24,
+                          cursorHeight: 20,
                           style: context.theme.bodyMedium.copyWith(
                             color: AppColors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                           decoration: const InputDecoration(
                             hintText: 'Enter your Username',
                           ),
                           onChanged: registerState.setUsername,
                         ),
-                        const Gap(25),
+                        const Gap(16),
                         Text(
                           'Password',
-                          style: context.theme.headlineSmall,
+                          style: context.theme.headlineSmall
+                              .copyWith(fontSize: 14),
                         ),
                         const Gap(8),
                         Observer(
                           builder: (context) {
                             return TextField(
-                              cursorHeight: 24,
+                              cursorHeight: 20,
                               style: context.theme.bodyMedium.copyWith(
                                 color: AppColors.white,
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                               decoration: InputDecoration(
                                 hintText: '• • • • • • • • • • • •',
@@ -94,19 +97,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                           },
                         ),
-                        const Gap(25),
+                        const Gap(16),
                         Text(
                           'Confirm Password',
-                          style: context.theme.headlineSmall,
+                          style: context.theme.headlineSmall
+                              .copyWith(fontSize: 14),
                         ),
                         const Gap(8),
                         Observer(
                           builder: (context) {
                             return TextField(
-                              cursorHeight: 24,
+                              cursorHeight: 20,
                               style: context.theme.bodyMedium.copyWith(
                                 color: AppColors.white,
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                               decoration: InputDecoration(
                                 hintText: '• • • • • • • • • • • •',
@@ -116,26 +120,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                           },
                         ),
-                        const Gap(40),
+                        const Gap(24),
                         Observer(
                           builder: (_) => SizedBox(
                             width: double.infinity,
-                            height: 58,
+                            height: 48,
                             child: ElevatedButton(
                               onPressed: registerState.isRegistrationEnabled
                                   ? () {
-                                      // Handle login button press here
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EmptyHomeScreen(),
+                                        ),
+                                      );
                                     }
                                   : null,
                               style: context.theme.elevatedButtonStyle,
                               child: Text(
                                 'Register',
-                                style: context.theme.headlineSmall,
+                                style: context.theme.headlineSmall
+                                    .copyWith(fontSize: 16),
                               ),
                             ),
                           ),
                         ),
-                        const Gap(19),
+                        const Gap(12),
                         Row(
                           children: [
                             const Expanded(
@@ -147,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ' or ',
                               style: GoogleFonts.lato(
                                 color: AppColors.textFieldColor,
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                             ).paddingOnly(bottom: 5),
                             const Expanded(
@@ -157,21 +168,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        const Gap(24),
+                        const Gap(16),
                         SizedBox(
                           width: double.infinity,
-                          height: 58,
+                          height: 48,
                           child: OutlinedButton(
                             onPressed: () {},
-                            style: const ButtonStyle(
+                            style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll(Colors.transparent),
+                                  MaterialStateProperty.all(Colors.transparent),
                               foregroundColor:
-                                  MaterialStatePropertyAll(Colors.white),
+                                  MaterialStateProperty.all(Colors.white),
                               overlayColor:
-                                  MaterialStatePropertyAll(AppColors.primary),
-                              side: MaterialStatePropertyAll(
-                                BorderSide(color: AppColors.primary),
+                                  MaterialStateProperty.all(AppColors.primary),
+                              side: MaterialStateProperty.all(
+                                const BorderSide(color: AppColors.primary),
                               ),
                             ),
                             child: Row(
@@ -181,30 +192,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'assets/icons/google.svg',
                                   fit: BoxFit.fitHeight,
                                 ),
-                                const Gap(10),
+                                const Gap(8),
                                 Text(
                                   'Register with Google',
-                                  style: context.theme.headlineSmall,
+                                  style: context.theme.headlineSmall
+                                      .copyWith(fontSize: 14),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        const Gap(20),
+                        const Gap(12),
                         SizedBox(
                           width: double.infinity,
-                          height: 58,
+                          height: 48,
                           child: OutlinedButton(
                             onPressed: () {},
-                            style: const ButtonStyle(
+                            style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStatePropertyAll(Colors.transparent),
+                                  MaterialStateProperty.all(Colors.transparent),
                               foregroundColor:
-                                  MaterialStatePropertyAll(Colors.white),
+                                  MaterialStateProperty.all(Colors.white),
                               overlayColor:
-                                  MaterialStatePropertyAll(AppColors.primary),
-                              side: MaterialStatePropertyAll(
-                                BorderSide(color: AppColors.primary),
+                                  MaterialStateProperty.all(AppColors.primary),
+                              side: MaterialStateProperty.all(
+                                const BorderSide(color: AppColors.primary),
                               ),
                             ),
                             child: Row(
@@ -214,17 +226,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'assets/icons/apple.svg',
                                   fit: BoxFit.fitHeight,
                                 ),
-                                const Gap(10),
+                                const Gap(8),
                                 Text(
                                   'Register with Apple',
-                                  style: context.theme.headlineSmall,
+                                  style: context.theme.headlineSmall
+                                      .copyWith(fontSize: 14),
                                 ),
                               ],
                             ),
                           ),
                         ),
                       ],
-                    ).paddingHorizontal(),
+                    ).paddingHorizontal(24),
                   ],
                 ),
               ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +12,8 @@ import '../../extensions/widget_extension.dart';
 import '../../models/nav_bar_item.dart';
 import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
-import '../../widgets/category_dialog.dart';
-import '../../widgets/priority_dialog.dart';
+import '../../widgets/Dialogs/category_dialog.dart';
+import '../../widgets/Dialogs/priority_dialog.dart';
 import '../../widgets/task_card.dart';
 
 class EmptyHomeScreen extends StatefulWidget {
@@ -121,10 +119,6 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
           onSendTask: () {
             state.createTask(_dateRangePickerController.selectedDate!);
             Navigator.pop(context);
-            log(state.title.toString());
-            log(state.description.toString());
-            log(_dateRangePickerController.selectedDate.toString());
-            log(state.time.toString());
           },
         );
       },
@@ -167,7 +161,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                       ),
                       itemBuilder: (context, index) {
                         return TaskCard(
-                          taskModel: state.tasks[index],
+                          index: index,
                           onCheckboxChanged: (isChecked) {},
                         );
                       },
@@ -274,7 +268,8 @@ class CalendarBottomSheet extends StatelessWidget {
             showNavigationArrow: true,
             headerStyle: DateRangePickerHeaderStyle(
               textAlign: TextAlign.center,
-              textStyle: context.theme.displayMedium,
+              textStyle:
+                  context.theme.displayMedium.copyWith(color: AppColors.white),
             ),
             monthViewSettings:
                 const DateRangePickerMonthViewSettings(firstDayOfWeek: 6),
@@ -287,7 +282,6 @@ class CalendarBottomSheet extends StatelessWidget {
             },
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
                 child: TextButton(
@@ -324,7 +318,7 @@ class CalendarBottomSheet extends StatelessWidget {
           ),
         ],
       ).paddingHorizontal(8),
-    ).paddingOnly(top: 274, bottom: 212, left: 24, right: 24);
+    ).paddingSymmetric(vertical: 210);
   }
 }
 

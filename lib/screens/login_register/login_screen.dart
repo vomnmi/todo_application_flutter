@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 },
               ),
-              const Gap(67),
+              const Gap(50),
               Observer(
                 builder: (_) => SizedBox(
                   width: double.infinity,
@@ -210,26 +210,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 104, top: 50),
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: GoogleFonts.lato(
-                        fontSize: 12,
-                        color: AppColors.textGrey,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Register',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        text: TextSpan(
+                          text: "Don't have an account? ",
                           style: GoogleFonts.lato(
                             fontSize: 12,
-                            color: Colors.white,
+                            color: AppColors.textGrey,
                           ),
+                          children: [
+                            TextSpan(
+                              text: 'Register',
+                              style: GoogleFonts.lato(
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
