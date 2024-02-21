@@ -149,7 +149,31 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                 ),
               ],
             ).paddingOnly(top: 15, left: 20, right: 20),
-            const Gap(70),
+            const Gap(16),
+            Observer(
+              builder: (context) {
+                return TextField(
+                  cursorHeight: 24,
+                  cursorWidth: 1,
+                  style: context.theme.bodyMedium.copyWith(
+                    color: AppColors.white,
+                    fontSize: 16,
+                  ),
+                  onChanged: state.runFilter,
+                  decoration: InputDecoration(
+                    prefix: SvgPicture.asset(
+                      'assets/icons/search.svg',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                    ),
+                    contentPadding: const EdgeInsets.all(10),
+                    hintText: ' Search for your task...',
+                  ),
+                ).paddingHorizontal(24);
+              },
+            ),
+            const Gap(20),
             Expanded(
               child: Observer(
                 builder: (context) {
@@ -209,7 +233,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  for (var i = 0; i < 4; i++)
+                  for (var i = 0; i < items.length; i++)
                     GestureDetector(
                       onTap: () {
                         state.currentIndex = i;

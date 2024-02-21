@@ -194,16 +194,15 @@ final lightTheme = base.copyWith(
     ),
     hintStyle: GoogleFonts.lato(
       color: AppColors.hintTextColor,
-      //fontFamily: FontFamily.regular,
       fontSize: 16,
-      height: 1.375,
+      // height: 1.375,
     ),
     fillColor: AppColors.textFieldGrey,
-    contentPadding: const EdgeInsets.only(
-      left: 12,
-      top: 18,
-      bottom: 18,
-    ),
+    // contentPadding: const EdgeInsets.only(
+    //   left: 12,
+    //   top: 18,
+    //   bottom: 18,
+    // ),
     border: const OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.textFieldColor),
     ),
@@ -217,7 +216,7 @@ final lightTheme = base.copyWith(
       borderSide: BorderSide(color: AppColors.textFieldColor),
     ),
     filled: true,
-    labelStyle: base.primaryTextTheme.bodyMedium,
+    // labelStyle: base.primaryTextTheme.bodyMedium,
   ),
 
   buttonTheme: base.buttonTheme.copyWith(

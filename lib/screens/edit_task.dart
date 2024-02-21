@@ -80,10 +80,13 @@ class _EditTaskState extends State<EditTask> {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 // child: SvgPicture.asset('assets/icons/repeat.svg'),
-                child: const Icon(
-                  Icons.repeat_rounded,
-                  color: AppColors.white,
-                  size: 24,
+                child: GestureDetector(
+                  onTap: onRepeat,
+                  child: const Icon(
+                    Icons.repeat_rounded,
+                    color: AppColors.white,
+                    size: 24,
+                  ),
                 ),
               ),
             ],
@@ -344,5 +347,10 @@ class _EditTaskState extends State<EditTask> {
         );
       },
     );
+  }
+
+  Future<void> onRepeat() async {
+    state.repeatTask(taskModel);
+    Navigator.pop(context);
   }
 }
