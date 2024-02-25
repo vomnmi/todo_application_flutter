@@ -1,16 +1,20 @@
-# todo_application
 
-A new Flutter project.
+## Task Manager App (ToDo App)
 
-## Getting Started
+### Overview:
 
-This project is a starting point for a Flutter application.
+The Task Manager App is an ongoing project designed to help users organize their tasks efficiently. Please note that the app is currently in development, and new features are continuously being added.
 
-A few resources to get you started if this is your first Flutter project:
+### Features:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Task Creation:** Create tasks with titles, descriptions, categories, priorities, and due dates.
+- **Task Management:** View, edit, and delete tasks as needed.
+- **Search Functionality:** Easily search for tasks based on titles.
+- **Category and Priority:** Assign categories and priorities to tasks for better organization.
+- **Date and Time:** Set due dates and times for tasks.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Important Notice:
+
+This application is a work in progress, and additional features and improvements are being actively developed. Users may encounter changes and updates as development progresses. Your feedback and suggestions are highly appreciated as they contribute to the refinement of the app.
+
+Thank you for your understanding and patience as we continue to enhance the Task Manager App!
