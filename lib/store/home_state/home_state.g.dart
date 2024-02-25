@@ -182,7 +182,7 @@ mixin _$HomeState on _HomeState, Store {
   }
 
   @override
-  void createTask(DateTime date) {
+  void createTask(DateTime? date) {
     final _$actionInfo =
         _$_HomeStateActionController.startAction(name: '_HomeState.createTask');
     try {

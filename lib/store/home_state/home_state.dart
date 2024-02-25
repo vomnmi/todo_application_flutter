@@ -119,14 +119,30 @@ abstract class _HomeState with Store {
   void setTime(Time time) => this.time = time;
 
   @action
-  void createTask(DateTime date) {
+  void createTask(DateTime? date) {
+    final todayDate = DateTime.now().toLocal();
+
+    date ??= isToday(first: todayDate)
+        ? todayDate
+        : DateTime(todayDate.year, todayDate.month, todayDate.day);
+
     final task = TaskModel(
       id: DateTime.fromMicrosecondsSinceEpoch(1000).toIso8601String(),
-      title: title!,
-      description: description,
+      // ignore: use_if_null_to_convert_nulls_to_bools
+      title: title?.isNotEmpty == true ? title! : 'Untitled',
+      description: description ?? 'None',
       date: date,
-      category: category,
-      priority: priority,
+      category: category ??
+          CategoryModel(
+            color: AppColors.blue,
+            iconPath: 'assets/icons/category_icons/other.svg',
+            title: 'None',
+          ),
+      priority: priority ??
+          PriorityModel(
+            priorityNumber: 666,
+            iconPath: 'assets/icons/task_flag.svg',
+          ),
       time: TimeModel(
         hour: time?.hour != null
             ? time!.hour < 10
@@ -156,12 +172,14 @@ abstract class _HomeState with Store {
         })
         .toList()
         .asObservable();
+    foundTask = tasks.toList().asObservable();
   }
 
   @action
   void deleteTask(TaskModel task) {
     log(tasks.length.toString());
     tasks.remove(task);
+    foundTask = tasks.toList().asObservable();
   }
 
   @action
@@ -178,6 +196,7 @@ abstract class _HomeState with Store {
     deleteTask(originalTask);
 
     tasks.add(repeatedTask);
+    foundTask = tasks.toList().asObservable();
   }
 
   @action
