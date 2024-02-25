@@ -161,11 +161,14 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                   ),
                   onChanged: state.runFilter,
                   decoration: InputDecoration(
-                    prefix: SvgPicture.asset(
-                      'assets/icons/search.svg',
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.cover,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SvgPicture.asset(
+                        'assets/icons/search.svg',
+                        width: 20,
+                        height: 20,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.all(10),
                     hintText: ' Search for your task...',
@@ -179,7 +182,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                 builder: (context) {
                   if (state.tasks.isNotEmpty) {
                     return ListView.separated(
-                      itemCount: state.tasks.length,
+                      itemCount: state.foundTask.length,
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 16,
                       ),

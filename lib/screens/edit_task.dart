@@ -47,228 +47,230 @@ class _EditTaskState extends State<EditTask> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.blackBackground,
-      body: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppColors.editTaskButton,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                    size: 24,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.blackBackground,
+        body: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColors.editTaskButton,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(4),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.all(4),
 
-                decoration: BoxDecoration(
-                  color: AppColors.editTaskButton,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                // child: SvgPicture.asset('assets/icons/repeat.svg'),
-                child: GestureDetector(
-                  onTap: onRepeat,
-                  child: const Icon(
-                    Icons.repeat_rounded,
-                    color: AppColors.white,
-                    size: 24,
+                  decoration: BoxDecoration(
+                    color: AppColors.editTaskButton,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  // child: SvgPicture.asset('assets/icons/repeat.svg'),
+                  child: GestureDetector(
+                    onTap: onRepeat,
+                    child: const Icon(
+                      Icons.repeat_rounded,
+                      color: AppColors.white,
+                      size: 24,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const Gap(30),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 16,
-                height: 28,
-                child: Checkbox(
-                  visualDensity: VisualDensity.comfortable,
-                  checkColor: Colors.white,
-                  fillColor:
-                      const MaterialStatePropertyAll(AppColors.bottomNavBar),
-                  value: widget.isChecked,
-                  shape: const CircleBorder(),
-                  activeColor: AppColors.bottomNavBar,
-                  side: MaterialStateBorderSide.resolveWith(
-                    (states) => const BorderSide(color: AppColors.white),
+              ],
+            ),
+            const Gap(30),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 16,
+                  height: 28,
+                  child: Checkbox(
+                    visualDensity: VisualDensity.comfortable,
+                    checkColor: Colors.white,
+                    fillColor:
+                        const MaterialStatePropertyAll(AppColors.bottomNavBar),
+                    value: widget.isChecked,
+                    shape: const CircleBorder(),
+                    activeColor: AppColors.bottomNavBar,
+                    side: MaterialStateBorderSide.resolveWith(
+                      (states) => const BorderSide(color: AppColors.white),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value!;
+                        widget.onCheckboxChanged(value);
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      isChecked = value!;
-                      widget.onCheckboxChanged(value);
-                    });
-                  },
                 ),
-              ),
-              const Gap(21),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Observer(
-                            builder: (context) {
-                              return Text(
-                                taskModel.title,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: context.theme.headlineMedium,
-                              );
-                            },
+                const Gap(21),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Observer(
+                              builder: (context) {
+                                return Text(
+                                  taskModel.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: context.theme.headlineMedium,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (taskModel.description != null)
+                        Observer(
+                          builder: (context) {
+                            return Text(
+                              taskModel.description!,
+                              style: context.theme.headlineSmall
+                                  .copyWith(color: AppColors.grey),
+                            ).paddingOnly(top: 10);
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: editTitle,
+                  child: SvgPicture.asset(
+                    'assets/icons/edit_text.svg',
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
+              ],
+            ),
+            const Gap(38),
+            Row(
+              children: [
+                SvgPicture.asset('assets/icons/timer.svg'),
+                const Gap(8),
+                Text(
+                  'Task Time: ',
+                  style: context.theme.headlineSmall,
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.21),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Observer(
+                    builder: (context) {
+                      return GestureDetector(
+                        onTap: editDate,
+                        child: Text(
+                          taskModel.getIsToday
+                              ? 'Today At ${taskModel.time!.hour}:${taskModel.time!.minute}'
+                              : '${DateFormat('dd.MM.yy').format(taskModel.date!.toLocal())} At ${taskModel.time!.hour}:${taskModel.time!.minute}',
+                          style: context.theme.bodyMedium.copyWith(
+                            color: AppColors.white,
                           ),
                         ),
-                      ],
-                    ),
-                    if (taskModel.description != null)
-                      Observer(
-                        builder: (context) {
-                          return Text(
-                            taskModel.description!,
-                            style: context.theme.headlineSmall
-                                .copyWith(color: AppColors.grey),
-                          ).paddingOnly(top: 10);
-                        },
-                      ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: editTitle,
-                child: SvgPicture.asset(
-                  'assets/icons/edit_text.svg',
-                  width: 28,
-                  height: 28,
+              ],
+            ),
+            const Gap(31),
+            Row(
+              children: [
+                SvgPicture.asset('assets/icons/task_tag.svg'),
+                const Gap(8),
+                Text(
+                  'Task Category: ',
+                  style: context.theme.headlineSmall,
                 ),
-              ),
-            ],
-          ),
-          const Gap(38),
-          Row(
-            children: [
-              SvgPicture.asset('assets/icons/timer.svg'),
-              const Gap(8),
-              Text(
-                'Task Time: ',
-                style: context.theme.headlineSmall,
-              ),
-              const Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.21),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Observer(
+                const Spacer(),
+                Observer(
                   builder: (context) {
                     return GestureDetector(
-                      onTap: editDate,
-                      child: Text(
-                        taskModel.getIsToday
-                            ? 'Today At ${taskModel.time!.hour}:${taskModel.time!.minute}'
-                            : '${DateFormat('dd.MM.yy').format(taskModel.date!.toLocal())} At ${taskModel.time!.hour}:${taskModel.time!.minute}',
-                        style: context.theme.bodyMedium.copyWith(
-                          color: AppColors.white,
+                      onTap: editCategory,
+                      child: CategoryOnTaskCard(
+                        categoryModel: taskModel.category!,
+                        backgroundColor: Colors.white.withOpacity(0.21),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 9.5,
                         ),
                       ),
                     );
                   },
                 ),
-              ),
-            ],
-          ),
-          const Gap(31),
-          Row(
-            children: [
-              SvgPicture.asset('assets/icons/task_tag.svg'),
-              const Gap(8),
-              Text(
-                'Task Category: ',
-                style: context.theme.headlineSmall,
-              ),
-              const Spacer(),
-              Observer(
-                builder: (context) {
-                  return GestureDetector(
-                    onTap: editCategory,
-                    child: CategoryOnTaskCard(
-                      categoryModel: taskModel.category!,
-                      backgroundColor: Colors.white.withOpacity(0.21),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 9.5,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          const Gap(31),
-          Row(
-            children: [
-              SvgPicture.asset('assets/icons/task_flag.svg'),
-              const Gap(8),
-              Text(
-                'Task Priority: ',
-                style: context.theme.headlineSmall,
-              ),
-              const Spacer(),
-              Observer(
-                builder: (context) {
-                  return GestureDetector(
-                    onTap: editPriority,
-                    child: PriorityOnTaskCard(
-                      priorityModel: taskModel.priority!,
-                      backgroundColor: Colors.white.withOpacity(0.21),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      showBorder: false,
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          const Gap(31),
-          GestureDetector(
-            onTap: onDelete,
-            child: Row(
+              ],
+            ),
+            const Gap(31),
+            Row(
               children: [
-                SvgPicture.asset('assets/icons/trash.svg'),
-                const Gap(11),
+                SvgPicture.asset('assets/icons/task_flag.svg'),
+                const Gap(8),
                 Text(
-                  'Delete Task',
-                  style: context.theme.headlineSmall
-                      .copyWith(color: AppColors.deleteTaskButton),
+                  'Task Priority: ',
+                  style: context.theme.headlineSmall,
+                ),
+                const Spacer(),
+                Observer(
+                  builder: (context) {
+                    return GestureDetector(
+                      onTap: editPriority,
+                      child: PriorityOnTaskCard(
+                        priorityModel: taskModel.priority!,
+                        backgroundColor: Colors.white.withOpacity(0.21),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        showBorder: false,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
-          ),
-        ],
-      ).paddingOnly(left: 24, right: 24, top: 35),
+            const Gap(31),
+            GestureDetector(
+              onTap: onDelete,
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/icons/trash.svg'),
+                  const Gap(11),
+                  Text(
+                    'Delete Task',
+                    style: context.theme.headlineSmall
+                        .copyWith(color: AppColors.deleteTaskButton),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ).paddingOnly(left: 24, right: 24, top: 15),
+      ),
     );
   }
 

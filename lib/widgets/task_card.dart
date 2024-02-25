@@ -32,7 +32,7 @@ class _TaskCardState extends State<TaskCard> {
   bool isChecked = false;
   final state = HomeState();
 
-  TaskModel get taskModel => state.tasks[widget.index];
+  TaskModel get taskModel => state.foundTask[widget.index];
 
   @override
   Widget build(BuildContext context) {

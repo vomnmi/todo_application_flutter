@@ -26,6 +26,10 @@ abstract class _HomeState with Store {
   @observable
   ObservableList<TaskModel> foundTask = <TaskModel>[].asObservable();
 
+  _HomeState() {
+    foundTask = tasks.toList().asObservable();
+  }
+
   @observable
   ObservableList<TaskModel> tasks = <TaskModel>[
     TaskModel(
@@ -137,6 +141,7 @@ abstract class _HomeState with Store {
       ),
     );
     tasks.add(task);
+    foundTask = tasks.toList().asObservable();
     clearData();
   }
 
