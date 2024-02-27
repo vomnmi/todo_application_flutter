@@ -20,14 +20,10 @@ import '../widgets/priority_on_taskCard.dart';
 
 class EditTask extends StatefulWidget {
   final int index;
-  final bool isChecked;
-  final void Function(bool) onCheckboxChanged;
 
   const EditTask({
     super.key,
     required this.index,
-    required this.isChecked,
-    required this.onCheckboxChanged,
   });
 
   @override
@@ -42,7 +38,6 @@ class _EditTaskState extends State<EditTask> {
   @override
   void initState() {
     super.initState();
-    isChecked = widget.isChecked;
   }
 
   @override
@@ -104,7 +99,7 @@ class _EditTaskState extends State<EditTask> {
                     checkColor: Colors.white,
                     fillColor:
                         const MaterialStatePropertyAll(AppColors.bottomNavBar),
-                    value: widget.isChecked,
+                    value: taskModel.isDone,
                     shape: const CircleBorder(),
                     activeColor: AppColors.bottomNavBar,
                     side: MaterialStateBorderSide.resolveWith(
@@ -113,7 +108,6 @@ class _EditTaskState extends State<EditTask> {
                     onChanged: (value) {
                       setState(() {
                         isChecked = value!;
-                        widget.onCheckboxChanged(value);
                       });
                     },
                   ),

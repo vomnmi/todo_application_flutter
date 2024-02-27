@@ -16,14 +16,14 @@ import '../../widgets/Dialogs/category_dialog.dart';
 import '../../widgets/Dialogs/priority_dialog.dart';
 import '../../widgets/task_card.dart';
 
-class EmptyHomeScreen extends StatefulWidget {
-  const EmptyHomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<EmptyHomeScreen> createState() => _EmptyHomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final HomeState state = HomeState();
 
   List<NavBarItem> items = [
@@ -117,7 +117,7 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
           onShowCategories: showCategories,
           onShowPriorities: showPriorities,
           onSendTask: () {
-            state.createTask(_dateRangePickerController.selectedDate!);
+            state.createTask(_dateRangePickerController.selectedDate);
             Navigator.pop(context);
           },
         );
@@ -189,7 +189,8 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
                       itemBuilder: (context, index) {
                         return TaskCard(
                           index: index,
-                          onCheckboxChanged: (isChecked) {},
+                        ).paddingOnly(
+                          bottom: index == state.foundTask.length - 1 ? 35 : 0,
                         );
                       },
                     );
@@ -219,48 +220,6 @@ class _EmptyHomeScreenState extends State<EmptyHomeScreen> {
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: showAddTask,
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.white,
-          shape: const CircleBorder(),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          color: AppColors.bottomNavBar,
-          height: 81,
-          child: Observer(
-            builder: (context) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  for (var i = 0; i < items.length; i++)
-                    GestureDetector(
-                      onTap: () {
-                        state.currentIndex = i;
-                      },
-                      child: Column(
-                        children: [
-                          const Gap(10),
-                          SvgPicture.asset(
-                            state.currentIndex == i
-                                ? items[i].selectedIconPath
-                                : items[i].iconPath,
-                            height: 30,
-                          ),
-                          Text(items[i].title),
-                        ],
-                      ).paddingOnly(
-                        right: i == 1 ? 15 : 0,
-                        left: i == 2 ? 15 : 0,
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
         ),
       ),
     );

@@ -23,12 +23,20 @@ class HomeState extends THomeState {
 class THomeState = _HomeState with _$HomeState;
 
 abstract class _HomeState with Store {
+  _HomeState() {
+    foundTask = tasks.toList().asObservable();
+    eachDayTasks = tasks.toList().asObservable();
+    completedTasks = tasks.toList().asObservable();
+  }
+
   @observable
   ObservableList<TaskModel> foundTask = <TaskModel>[].asObservable();
 
-  _HomeState() {
-    foundTask = tasks.toList().asObservable();
-  }
+  @observable
+  ObservableList<TaskModel> eachDayTasks = <TaskModel>[].asObservable();
+
+  @observable
+  ObservableList<TaskModel> completedTasks = <TaskModel>[].asObservable();
 
   @observable
   ObservableList<TaskModel> tasks = <TaskModel>[
@@ -44,7 +52,7 @@ abstract class _HomeState with Store {
         priorityNumber: 15,
         iconPath: 'assets/icons/task_flag.svg',
       ),
-      date: DateTime(2024, 9, 13),
+      date: DateTime(2024, 2, 27),
       time: const TimeModel(minute: '15', hour: '13'),
       description: 'None',
     ),
@@ -60,7 +68,7 @@ abstract class _HomeState with Store {
         priorityNumber: 15,
         iconPath: 'assets/icons/task_flag.svg',
       ),
-      date: DateTime(2024, 9, 14),
+      date: DateTime(2024, 2, 27),
       time: const TimeModel(minute: '15', hour: '13'),
       description: 'None',
     ),
@@ -76,7 +84,7 @@ abstract class _HomeState with Store {
         priorityNumber: 15,
         iconPath: 'assets/icons/task_flag.svg',
       ),
-      date: DateTime(2024, 9, 15),
+      date: DateTime(2024, 2, 29),
       time: const TimeModel(minute: '15', hour: '13'),
       description: 'None',
     ),
@@ -84,6 +92,12 @@ abstract class _HomeState with Store {
 
   @observable
   int currentIndex = 0;
+
+  @observable
+  DateTime searchDate = DateTime.now();
+
+  @observable
+  bool? isTodaySelected = true;
 
   @observable
   Time? time;
@@ -99,6 +113,22 @@ abstract class _HomeState with Store {
 
   @observable
   PriorityModel? priority;
+
+  @action
+  void toggleIsToday(bool? isToday) {
+    isTodaySelected = isToday;
+  }
+
+  @action
+  void toggleIsDone(int index) {
+    tasks = List<TaskModel>.generate(tasks.length, (i) {
+      final task = tasks[i];
+      if (i == index) {
+        return task.copyWith(isDone: !task.isDone);
+      }
+      return task;
+    }).asObservable();
+  }
 
   @action
   void setCategory(CategoryModel category) => this.category = category;
@@ -211,6 +241,22 @@ abstract class _HomeState with Store {
             )
             .toList()
             .asObservable();
+  }
+
+  @action
+  void dateFilter() {
+    foundTask = tasks
+        .where(
+          (task) =>
+              task.date != null &&
+              task.date!.year == searchDate.year &&
+              (task.isDone == isTodaySelected ?? false) &&
+              task.date!.month == searchDate.month &&
+              task.date!.day == searchDate.day,
+        )
+        .toList()
+        .asObservable();
+    log(foundTask.length.toString());
   }
 
   bool isToday({

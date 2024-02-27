@@ -18,6 +18,7 @@ class AppColors {
   static const blackBackground = Color(0xff121212);
   static const editTaskButton = Color(0xff1d1d1d);
   static const deleteTaskButton = Color.fromARGB(255, 255, 73, 73);
+  static const darkGrey = Color(0xFF4C4C4C);
 
   // Category Colors
   static const groceryColor = Color(0xffCCFF80);

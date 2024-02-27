@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen/home_empty_screen.dart';
 import 'themes/light_theme.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const EmptyHomeScreen(),
+      home: const BottomNavBar(),
     );
   }
 }

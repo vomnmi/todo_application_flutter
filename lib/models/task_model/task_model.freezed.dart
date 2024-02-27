@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TaskModel {
+  bool get isDone => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -35,7 +36,8 @@ abstract class $TaskModelCopyWith<$Res> {
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
-      {String id,
+      {bool isDone,
+      String id,
       String title,
       String? description,
       PriorityModel? priority,
@@ -59,6 +61,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isDone = null,
     Object? id = null,
     Object? title = null,
     Object? description = freezed,
@@ -68,6 +71,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
     Object? time = freezed,
   }) {
     return _then(_value.copyWith(
+      isDone: null == isDone
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -121,7 +128,8 @@ abstract class _$$TaskModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {bool isDone,
+      String id,
       String title,
       String? description,
       PriorityModel? priority,
@@ -144,6 +152,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isDone = null,
     Object? id = null,
     Object? title = null,
     Object? description = freezed,
@@ -153,6 +162,10 @@ class __$$TaskModelImplCopyWithImpl<$Res>
     Object? time = freezed,
   }) {
     return _then(_$TaskModelImpl(
+      isDone: null == isDone
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -189,7 +202,8 @@ class __$$TaskModelImplCopyWithImpl<$Res>
 
 class _$TaskModelImpl implements _TaskModel {
   const _$TaskModelImpl(
-      {required this.id,
+      {this.isDone = false,
+      required this.id,
       required this.title,
       this.description,
       this.priority,
@@ -197,6 +211,9 @@ class _$TaskModelImpl implements _TaskModel {
       this.date,
       this.time});
 
+  @override
+  @JsonKey()
+  final bool isDone;
   @override
   final String id;
   @override
@@ -214,7 +231,7 @@ class _$TaskModelImpl implements _TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, title: $title, description: $description, priority: $priority, category: $category, date: $date, time: $time)';
+    return 'TaskModel(isDone: $isDone, id: $id, title: $title, description: $description, priority: $priority, category: $category, date: $date, time: $time)';
   }
 
   @override
@@ -222,6 +239,7 @@ class _$TaskModelImpl implements _TaskModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskModelImpl &&
+            (identical(other.isDone, isDone) || other.isDone == isDone) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -235,8 +253,8 @@ class _$TaskModelImpl implements _TaskModel {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, description, priority, category, date, time);
+  int get hashCode => Object.hash(runtimeType, isDone, id, title, description,
+      priority, category, date, time);
 
   @JsonKey(ignore: true)
   @override
@@ -247,7 +265,8 @@ class _$TaskModelImpl implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   const factory _TaskModel(
-      {required final String id,
+      {final bool isDone,
+      required final String id,
       required final String title,
       final String? description,
       final PriorityModel? priority,
@@ -255,6 +274,8 @@ abstract class _TaskModel implements TaskModel {
       final DateTime? date,
       final TimeModel? time}) = _$TaskModelImpl;
 
+  @override
+  bool get isDone;
   @override
   String get id;
   @override

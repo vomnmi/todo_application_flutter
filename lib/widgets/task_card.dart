@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -16,12 +15,10 @@ import 'priority_on_taskCard.dart';
 
 class TaskCard extends StatefulWidget {
   final int index;
-  final void Function(bool) onCheckboxChanged;
 
   const TaskCard({
     super.key,
     required this.index,
-    required this.onCheckboxChanged,
   });
 
   @override
@@ -29,7 +26,6 @@ class TaskCard extends StatefulWidget {
 }
 
 class _TaskCardState extends State<TaskCard> {
-  bool isChecked = false;
   final state = HomeState();
 
   TaskModel get taskModel => state.foundTask[widget.index];
@@ -38,14 +34,12 @@ class _TaskCardState extends State<TaskCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        log(state.tasks.toString());
+        // log(state.tasks.toString());
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => EditTask(
               index: widget.index,
-              isChecked: isChecked,
-              onCheckboxChanged: widget.onCheckboxChanged,
             ),
           ),
         );
@@ -63,19 +57,20 @@ class _TaskCardState extends State<TaskCard> {
             SizedBox(
               height: 16,
               width: 16,
-              child: Checkbox(
-                checkColor: Colors.white,
-                value: isChecked,
-                shape: const CircleBorder(),
-                activeColor: AppColors.bottomNavBar,
-                side: MaterialStateBorderSide.resolveWith(
-                  (states) => const BorderSide(color: AppColors.white),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    isChecked = value!;
-                    widget.onCheckboxChanged(value);
-                  });
+              child: Observer(
+                builder: (context) {
+                  return Checkbox(
+                    checkColor: Colors.white,
+                    value: state.tasks[widget.index].isDone,
+                    shape: const CircleBorder(),
+                    activeColor: AppColors.bottomNavBar,
+                    side: MaterialStateBorderSide.resolveWith(
+                      (states) => const BorderSide(color: AppColors.white),
+                    ),
+                    onChanged: (value) {
+                      state.toggleIsDone(widget.index);
+                    },
+                  );
                 },
               ),
             ),

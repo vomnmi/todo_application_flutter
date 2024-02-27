@@ -9,6 +9,7 @@ part 'task_model.freezed.dart';
 @freezed
 class TaskModel with _$TaskModel {
   const factory TaskModel({
+    @Default(false) bool isDone,
     required String id,
     required String title,
     String? description,
