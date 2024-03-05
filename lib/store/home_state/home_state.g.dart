@@ -25,38 +25,6 @@ mixin _$HomeState on _HomeState, Store {
     });
   }
 
-  late final _$eachDayTasksAtom =
-      Atom(name: '_HomeState.eachDayTasks', context: context);
-
-  @override
-  ObservableList<TaskModel> get eachDayTasks {
-    _$eachDayTasksAtom.reportRead();
-    return super.eachDayTasks;
-  }
-
-  @override
-  set eachDayTasks(ObservableList<TaskModel> value) {
-    _$eachDayTasksAtom.reportWrite(value, super.eachDayTasks, () {
-      super.eachDayTasks = value;
-    });
-  }
-
-  late final _$completedTasksAtom =
-      Atom(name: '_HomeState.completedTasks', context: context);
-
-  @override
-  ObservableList<TaskModel> get completedTasks {
-    _$completedTasksAtom.reportRead();
-    return super.completedTasks;
-  }
-
-  @override
-  set completedTasks(ObservableList<TaskModel> value) {
-    _$completedTasksAtom.reportWrite(value, super.completedTasks, () {
-      super.completedTasks = value;
-    });
-  }
-
   late final _$tasksAtom = Atom(name: '_HomeState.tasks', context: context);
 
   @override
@@ -85,38 +53,6 @@ mixin _$HomeState on _HomeState, Store {
   set currentIndex(int value) {
     _$currentIndexAtom.reportWrite(value, super.currentIndex, () {
       super.currentIndex = value;
-    });
-  }
-
-  late final _$searchDateAtom =
-      Atom(name: '_HomeState.searchDate', context: context);
-
-  @override
-  DateTime get searchDate {
-    _$searchDateAtom.reportRead();
-    return super.searchDate;
-  }
-
-  @override
-  set searchDate(DateTime value) {
-    _$searchDateAtom.reportWrite(value, super.searchDate, () {
-      super.searchDate = value;
-    });
-  }
-
-  late final _$isTodaySelectedAtom =
-      Atom(name: '_HomeState.isTodaySelected', context: context);
-
-  @override
-  bool? get isTodaySelected {
-    _$isTodaySelectedAtom.reportRead();
-    return super.isTodaySelected;
-  }
-
-  @override
-  set isTodaySelected(bool? value) {
-    _$isTodaySelectedAtom.reportWrite(value, super.isTodaySelected, () {
-      super.isTodaySelected = value;
     });
   }
 
@@ -200,17 +136,6 @@ mixin _$HomeState on _HomeState, Store {
 
   late final _$_HomeStateActionController =
       ActionController(name: '_HomeState', context: context);
-
-  @override
-  void toggleIsToday(bool? isToday) {
-    final _$actionInfo = _$_HomeStateActionController.startAction(
-        name: '_HomeState.toggleIsToday');
-    try {
-      return super.toggleIsToday(isToday);
-    } finally {
-      _$_HomeStateActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void toggleIsDone(int index) {
@@ -323,26 +248,11 @@ mixin _$HomeState on _HomeState, Store {
   }
 
   @override
-  void dateFilter() {
-    final _$actionInfo =
-        _$_HomeStateActionController.startAction(name: '_HomeState.dateFilter');
-    try {
-      return super.dateFilter();
-    } finally {
-      _$_HomeStateActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 foundTask: ${foundTask},
-eachDayTasks: ${eachDayTasks},
-completedTasks: ${completedTasks},
 tasks: ${tasks},
 currentIndex: ${currentIndex},
-searchDate: ${searchDate},
-isTodaySelected: ${isTodaySelected},
 time: ${time},
 title: ${title},
 description: ${description},

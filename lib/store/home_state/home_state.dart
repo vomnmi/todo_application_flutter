@@ -25,18 +25,10 @@ class THomeState = _HomeState with _$HomeState;
 abstract class _HomeState with Store {
   _HomeState() {
     foundTask = tasks.toList().asObservable();
-    eachDayTasks = tasks.toList().asObservable();
-    completedTasks = tasks.toList().asObservable();
   }
 
   @observable
   ObservableList<TaskModel> foundTask = <TaskModel>[].asObservable();
-
-  @observable
-  ObservableList<TaskModel> eachDayTasks = <TaskModel>[].asObservable();
-
-  @observable
-  ObservableList<TaskModel> completedTasks = <TaskModel>[].asObservable();
 
   @observable
   ObservableList<TaskModel> tasks = <TaskModel>[
@@ -53,6 +45,38 @@ abstract class _HomeState with Store {
         iconPath: 'assets/icons/task_flag.svg',
       ),
       date: DateTime(2024, 2, 27),
+      time: const TimeModel(minute: '15', hour: '13'),
+      description: 'None',
+    ),
+    TaskModel(
+      id: '66',
+      title: 'Test 66',
+      category: CategoryModel(
+        color: AppColors.purple,
+        iconPath: 'assets/icons/category_icons/design.svg',
+        title: 'Test 66',
+      ),
+      priority: PriorityModel(
+        priorityNumber: 15,
+        iconPath: 'assets/icons/task_flag.svg',
+      ),
+      date: DateTime(2024, 2, 28),
+      time: const TimeModel(minute: '15', hour: '13'),
+      description: 'None',
+    ),
+    TaskModel(
+      id: '77',
+      title: 'Test 77',
+      category: CategoryModel(
+        color: AppColors.purple,
+        iconPath: 'assets/icons/category_icons/design.svg',
+        title: 'Test 77',
+      ),
+      priority: PriorityModel(
+        priorityNumber: 15,
+        iconPath: 'assets/icons/task_flag.svg',
+      ),
+      date: DateTime(2024, 2, 28),
       time: const TimeModel(minute: '15', hour: '13'),
       description: 'None',
     ),
@@ -94,12 +118,6 @@ abstract class _HomeState with Store {
   int currentIndex = 0;
 
   @observable
-  DateTime searchDate = DateTime.now();
-
-  @observable
-  bool? isTodaySelected = true;
-
-  @observable
   Time? time;
 
   @observable
@@ -113,11 +131,6 @@ abstract class _HomeState with Store {
 
   @observable
   PriorityModel? priority;
-
-  @action
-  void toggleIsToday(bool? isToday) {
-    isTodaySelected = isToday;
-  }
 
   @action
   void toggleIsDone(int index) {
@@ -152,6 +165,7 @@ abstract class _HomeState with Store {
   void createTask(DateTime? date) {
     final todayDate = DateTime.now().toLocal();
 
+    // ignore: parameter_assignments
     date ??= isToday(first: todayDate)
         ? todayDate
         : DateTime(todayDate.year, todayDate.month, todayDate.day);
@@ -241,22 +255,6 @@ abstract class _HomeState with Store {
             )
             .toList()
             .asObservable();
-  }
-
-  @action
-  void dateFilter() {
-    foundTask = tasks
-        .where(
-          (task) =>
-              task.date != null &&
-              task.date!.year == searchDate.year &&
-              (task.isDone == isTodaySelected ?? false) &&
-              task.date!.month == searchDate.month &&
-              task.date!.day == searchDate.day,
-        )
-        .toList()
-        .asObservable();
-    log(foundTask.length.toString());
   }
 
   bool isToday({

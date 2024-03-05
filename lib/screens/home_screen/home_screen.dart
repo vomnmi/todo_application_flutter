@@ -9,10 +9,10 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
-import '../../models/nav_bar_item.dart';
 import '../../store/home_state/home_state.dart';
 import '../../themes/app_colors.dart';
 import '../../widgets/Dialogs/category_dialog.dart';
+import '../../widgets/Dialogs/exit_dialog.dart';
 import '../../widgets/Dialogs/priority_dialog.dart';
 import '../../widgets/task_card.dart';
 
@@ -26,35 +26,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final HomeState state = HomeState();
 
-  List<NavBarItem> items = [
-    NavBarItem(
-      iconPath: 'assets/icons/home-2.svg',
-      selectedIconPath: 'assets/icons/home_icon.svg',
-      title: 'Home',
-    ),
-    NavBarItem(
-      iconPath: 'assets/icons/calendar_icon.svg',
-      selectedIconPath: 'assets/icons/calendar_selected.svg',
-      title: 'Calendar',
-    ),
-    NavBarItem(
-      selectedIconPath: 'assets/icons/focus_selected.svg',
-      iconPath: 'assets/icons/focus_icon.svg',
-      title: 'Focus',
-    ),
-    NavBarItem(
-      selectedIconPath: 'assets/icons/profile_icon.svg',
-      iconPath: 'assets/icons/profile_icon.svg',
-      title: 'Profile',
-    ),
-  ];
-
   final DateRangePickerController _dateRangePickerController =
       DateRangePickerController();
 
   void setTime(Time time) {
     state.setTime(time);
     Navigator.pop(context);
+  }
+
+  Future<dynamic> exitApp() async {
+    await showDialog<dynamic>(
+      // backgroundColor: Colors.transparent,
+      // isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return const ExitApp();
+      },
+    );
   }
 
   Future<dynamic> showCalendar() async {
@@ -129,6 +117,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: showAddTask,
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add),
+        ).paddingOnly(bottom: 10),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         backgroundColor: AppColors.background,
         body: Column(
           children: [
@@ -140,12 +136,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   fit: BoxFit.fitHeight,
                 ),
                 Text(
-                  'Index',
+                  'ToDo',
                   style: context.theme.headlineMedium,
                 ),
-                const CircleAvatar(
-                  backgroundColor: AppColors.grey,
-                  backgroundImage: AssetImage('assets/icons/profile_pic.png'),
+                GestureDetector(
+                  onTap: exitApp,
+                  child: Image.asset(
+                    'assets/icons/exit.png',
+                    height: 24,
+                    color: AppColors.white.withOpacity(0.87),
+                  ),
                 ),
               ],
             ).paddingOnly(top: 15, left: 20, right: 20),

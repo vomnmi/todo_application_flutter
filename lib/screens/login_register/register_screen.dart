@@ -8,7 +8,7 @@ import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../store/register_state.dart';
 import '../../themes/app_colors.dart';
-import '../home_screen/home_empty_screen.dart';
+import '../home_screen/home_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
