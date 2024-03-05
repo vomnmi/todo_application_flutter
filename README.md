@@ -3,8 +3,7 @@
 
 ### Overview:
 
-The Task Manager App is an ongoing project designed to help users organize their tasks efficiently. Please note that the app is currently in development, and new features are continuously being added.
-
+The Task Manager App is an ongoing project designed to help users organize their tasks efficiently.
 ### Features:
 
 - **Task Creation:** Create tasks with titles, descriptions, categories, priorities, and due dates.
@@ -15,6 +14,5 @@ The Task Manager App is an ongoing project designed to help users organize their
 
 ### Important Notice:
 
-This application is a work in progress, and additional features and improvements are being actively developed. Users may encounter changes and updates as development progresses. Your feedback and suggestions are highly appreciated as they contribute to the refinement of the app.
+Your feedback and suggestions are highly appreciated as they contribute to the refinement of the app.
 
-Thank you for your understanding and patience as we continue to enhance the Task Manager App!
